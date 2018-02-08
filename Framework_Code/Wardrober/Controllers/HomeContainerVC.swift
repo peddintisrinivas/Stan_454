@@ -9,12 +9,12 @@
 import UIKit
 
 
-class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutorialVCDelegate, SignInDelegate, AddContainerDelegate
+class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutorialVCDelegate, SignInDelegate //AddContainerDelegate
 {
     @IBOutlet weak var childContentView: UIView!
     var homeNavigationController : BaseNavigationController? = nil;
     var slideMenuVC : SlideMenuVC? = nil;
-
+    
     var modelVC : ModelVC? = nil;
     
     @IBOutlet weak var navigationItemContainer : UIView!
@@ -33,7 +33,7 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
     var selectedButton : UIButton!
     
     var actionAfterLogin : ACTION_AFTER_LOGIN = ACTION_AFTER_LOGIN.none
-
+    
     // MARK: -  Activity Indicator
     var faAnimatedHanger : FAAnimatedHanger!
     
@@ -44,7 +44,7 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
     var activityView = UIActivityIndicatorView()
     
     var avilabilities : [CheckAvailablityItems] =  [CheckAvailablityItems]()
-
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -77,7 +77,7 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         
         let storyBoard = UIStoryboard(name: "Main", bundle:Bundle(for: Wardrober.self))
         self.homeNavigationController = storyBoard.instantiateViewController(withIdentifier: "HomeNavigationController") as? BaseNavigationController
-       
+        
         self.homeNavigationController!.delegate = self
         
         let landingPageVC = self.homeNavigationController?.viewControllers[0] as! FACategoryVC
@@ -85,18 +85,25 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         landingPageVC.homeContainerVC = self
         
         self.slideMenuVC = storyBoard.instantiateViewController(withIdentifier: "SlideMenuVC") as? SlideMenuVC
-
+        
         self.slideMenuVC?.homeContainerVC = self
         
         
         NotificationCenter.default.addObserver(self, selector: #selector(HomeContainerVC.hbMenuAppeared), name: NSNotification.Name(rawValue: Constants.kSlideMenuAppearedNotification) , object: nil)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(HomeContainerVC.hbMenuDisappeared), name: NSNotification.Name(rawValue: Constants.kSlideMenuDisappearedNotification) , object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeContainerVC.checkOutBtnTapped(_:)), name: NSNotification.Name(rawValue: Constants.kCheckOutBtnTappedNotif) , object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(HomeContainerVC.checkOutBtnTapped(_:)), name: NSNotification.Name(rawValue: Constants.kCheckOutBtnTappedNotif) , object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(HomeContainerVC.loadSignController), name: NSNotification.Name(rawValue: Constants.kUserNotSignedIn) , object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(HomeContainerVC.loadSignControllerFromItemDetailVC), name: NSNotification.Name(rawValue: Constants.kUserNotSignedInFromItemDetailVC) , object: nil)
+        
+        //NotificationCenter.default.addObserver(self, selector: #selector(HomeContainerVC.presentDefaultAddressController), name: NSNotification.Name(rawValue: "ShowDefaultAddressController") , object: nil)
+        
+        //NotificationCenter.default.addObserver(self, selector: #selector(HomeContainerVC.presentaddContainer), name: NSNotification.Name(rawValue: "ShowAddContainer") , object: nil)
+        
+        
         
         self.presentHomeNavigationController();
         self.loadSlideMenuVC()
@@ -118,7 +125,7 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         }
         
     }
-
+    
     @objc func itemsPresentInCartCount(_ notification : Notification)
     {
         
@@ -144,13 +151,13 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     
     func presentHomeNavigationController()
     {
         
         self.childContentView.translatesAutoresizingMaskIntoConstraints = false;
-
+        
         
         let childView = homeNavigationController!.view
         childView?.translatesAutoresizingMaskIntoConstraints = false;
@@ -168,7 +175,7 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         self.view.setNeedsLayout()
         
         self.view.layoutIfNeeded()
-
+        
         
     }
     
@@ -191,7 +198,7 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         self.view.setNeedsLayout()
         self.view.layoutIfNeeded()
         
-       self.slideMenuVC!.view.isHidden = true;
+        self.slideMenuVC!.view.isHidden = true;
         
         
     }
@@ -206,12 +213,12 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
     
     func hideSlideMenuVC()
     {
-
+        
         self.slideMenuVC!.performFadeOutAnimation()
-
+        
     }
     
-
+    
     
     
     func enableButtons(_ menuButtons : [UIButton]?)
@@ -294,14 +301,14 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         }
         
     }
-
+    
     // MARK: - Wardrober Initialisation Notification
     @objc func wardroberServiceInitialised()
     {
         self.setProgressHudHidden(true)
         
         //Load Categories if they aren't available - will be done once per Wardrober invocation
-
+        
     }
     
     func setProgressHudHidden(_ hidden : Bool)
@@ -339,12 +346,12 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
             self.faAnimatedHanger.view.removeFromSuperview()
         }
     }
-
+    
     // MARK: - Wardrober Initialisation Failed Notification
     @objc func wardroberServiceInitialisationFailed()
     {
         self.setProgressHudHidden(true)
-
+        
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 1)
         {
@@ -358,7 +365,7 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         self.hbMenuOn = true
         self.enableButtons(nil)
         self.disableButtons([self.selectedButton])
-
+        
     }
     
     @objc func hbMenuDisappeared()
@@ -366,9 +373,9 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         self.hbMenuOn = false
         self.enableButtons(nil)
         self.disableButtons([self.selectedButton])
-
+        
     }
-
+    
     // MARK: - IBActions
     
     @IBAction func hbMenuTapped(_ sender : UIButton)
@@ -384,7 +391,7 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
             hideSlideMenuVC()
         }
     }
-
+    
     @IBAction func homeTapped(_ sender : UIButton)
     {
         if hbMenuOn == true
@@ -395,7 +402,7 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         self.disableButtons(nil)
         
         self.homeNavigationController?.popToRootViewController(animated: true)
-
+        
         
     }
     
@@ -444,13 +451,13 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         {
             modelVC.selectedCategoryIndex = 0
             modelVC.homeContainerVC = self
-
+            
             self.homeNavigationController?.popToRootViewController(animated: false)
-        
+            
             self.homeNavigationController?.pushViewController(modelVC, animated: false)
-
+            
         }
-
+        
     }
     
     @IBAction func CartTapped(_ sender : UIButton)
@@ -468,88 +475,34 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
             
             self.homeNavigationController?.popToRootViewController(animated: false)
             self.homeNavigationController?.pushViewController(cartVC, animated: false)
-
-        }
-
-    }
-    
-    func checkItemsAvailablity()
-    {
-        var checkAvailablityItems = [[String: String]]()
-        
-        for item in FACart.sharedCart().getCartItems()
-        {
-            var dict = [String : String]()
-            dict["ProductItemID"] = item.itemProductID
-            dict["Size"] = item.sizeSelected?.itemSizeName
-            //print(item.sizeSelected?.itemSizeName!)
-
-            checkAvailablityItems.append(dict)
-        }
-        
-        let cartItems = ["Cartitems" : checkAvailablityItems]
-        print(cartItems)
-        
-        //self.activityView.startAnimating()
             
-        let urlString = String(format: "http://65.19.149.190/dev.stanleykorshakv1/ClientApi/WardrobeClientApi.svc/CheckProductAvailability")
+        }
         
-        self.avilabilities.removeAll()
-            
-        FAServiceHelper().post(url: urlString, parameters: cartItems as NSDictionary  , completion : { (success : Bool?, message : String?, responseObject : AnyObject?) in
-                
-                //self.activityView.stopAnimating()
-                
-                guard success == true else
-                {
-                    let alert=UIAlertController(title: "Alert", message: message, preferredStyle: UIAlertControllerStyle.alert);
-                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil));
-                    
-                    self.present(alert, animated: true, completion: nil)
-                    
-                    return
-                }
-                guard responseObject == nil else
-                {
-                    self.avilabilities =  AvailabilityHelper.getAvailabilityHelper(responseObject! as AnyObject?)!
-                    
-                    for item in self.avilabilities
-                    {
-                        let productID = item.productItemID as Int
-                        let avilable = item.avilability
-                        //let avilable = false
-                        let _ = item.size
-                        
-                        if avilable == false
-                        {
-                            print("This ID \(productID), Sold out")
-                            NotificationCenter.default.post(name: Notification.Name(rawValue: "SoldoutAlert"), object: nil)
-                            return
-                        }
-                    }
-                    self.getAddressService()
-                    return
-                }
-            })
     }
     
-    @objc func checkOutBtnTapped(_ notification: NSNotification)
-    {
-        let userSignedIn = UserDefaults.standard.bool(forKey: Constants.kUserSuccessfullySignedIn)
-        
-        if userSignedIn == true
-        {
-           //self.getAddressService()
-            self.checkItemsAvailablity()
-        }
-        else
-        {
-           self.actionAfterLogin = ACTION_AFTER_LOGIN.address_SHOW
-           self.presentSignController()
-        }
-    }
+    /*@objc func checkOutBtnTapped(_ notification: NSNotification)
+     {
+     let userSignedIn = UserDefaults.standard.bool(forKey: Constants.kUserSuccessfullySignedIn)
+     
+     if userSignedIn == true
+     {
+     //self.getAddressService()
+     //self.checkItemsAvailablity()
+     
+     if let cartVC = self.homeNavigationController?.visibleViewController as? ShoppingCart
+     {
+     //let cartVC = ShoppingCart()
+     cartVC.checkItemsAvailablity()
+     }
+     }
+     else
+     {
+     self.actionAfterLogin = ACTION_AFTER_LOGIN.address_SHOW
+     self.presentSignController()
+     }
+     }*/
     
-    @objc func presentSignController()
+    func presentSignController()
     {
         self.presentSignInVC()
     }
@@ -567,6 +520,42 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         self.presentSignInVC()
     }
     
+    /*@objc func presentaddContainer()
+     {
+     let storyBoard = UIStoryboard(name: "Address", bundle:Bundle(for: Wardrober.self))
+     let addContainerVC = storyBoard.instantiateViewController(withIdentifier: "AddContainerViewController") as? AddContainerVC
+     addContainerVC!.fromWhichController = "HomeContainerVC"
+     addContainerVC!.delegate = self
+     let addContainerNavController = UINavigationController.init(rootViewController: addContainerVC!)
+     
+     self.present(addContainerNavController, animated: true, completion: nil)
+     }
+     
+     @objc func presentDefaultAddressController()
+     {
+     let storyBoard = UIStoryboard(name: "Address", bundle:Bundle(for: Wardrober.self))
+     let defaultAddVC = storyBoard.instantiateViewController(withIdentifier: "DefaultAddressViewController") as? DefaultAddressVC
+     
+     let addressNavigationVC = UINavigationController.init(rootViewController: defaultAddVC!)
+     
+     self.present(addressNavigationVC, animated: true, completion: nil)
+     }*/
+    
+    // MARK: - Tutorial
+    
+    @objc func presentTutorial()
+    {
+        //print("tutorial tapped")
+        let storyBoard = UIStoryboard(name: "Main", bundle:Bundle(for: Wardrober.self))
+        let tutorialVC = storyBoard.instantiateViewController(withIdentifier: "FATutorialViewController") as? FATutorialViewController
+        
+        tutorialVC!.delegate = self
+        self.present(tutorialVC!, animated: true, completion:
+            {
+                //print("after siginNavController animation finished")
+        })
+    }
+    
     func presentSignInVC()
     {
         let storyBoard = UIStoryboard(name: "SignIn", bundle:Bundle(for: Wardrober.self))
@@ -577,6 +566,7 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         
         self.present(signNavigationVC, animated: true, completion: nil)
     }
+    
     // MARK: - SignInDelegate methods
     
     func signInControllerDidLogin(_ signInVC: SignInController)
@@ -593,13 +583,18 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
                     
                     self.WardrobeTapped(self.wardrobeButton)
                 }
-                else if self.actionAfterLogin == ACTION_AFTER_LOGIN.address_SHOW
-                {
-                    self.actionAfterLogin = .none
-                    
-                    //self.getAddressService()
-                    self.checkItemsAvailablity()
-                }
+                /*else if self.actionAfterLogin == ACTION_AFTER_LOGIN.address_SHOW
+                 {
+                 self.actionAfterLogin = .none
+                 
+                 //self.getAddressService()
+                 //self.checkItemsAvailablity()
+                 
+                 if let cartVC = self.homeNavigationController?.topViewController as? ShoppingCart
+                 {
+                 cartVC.checkItemsAvailablity()
+                 }
+                 }*/
             }
         }
     }
@@ -615,16 +610,21 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
                 if self.actionAfterLogin == ACTION_AFTER_LOGIN.wardrobe_SHOW
                 {
                     self.actionAfterLogin = .none
-                        
+                    
                     self.WardrobeTapped(self.wardrobeButton)
                 }
-                else if self.actionAfterLogin == ACTION_AFTER_LOGIN.address_SHOW
-                {
-                    self.actionAfterLogin = .none
-                    
-                    //self.getAddressService()
-                    self.checkItemsAvailablity()
-                }
+                /*else if self.actionAfterLogin == ACTION_AFTER_LOGIN.address_SHOW
+                 {
+                 self.actionAfterLogin = .none
+                 
+                 //self.getAddressService()
+                 //self.checkItemsAvailablity()
+                 
+                 if let cartVC = self.homeNavigationController?.topViewController as? ShoppingCart
+                 {
+                 cartVC.checkItemsAvailablity()
+                 }
+                 }*/
             }
             
         }
@@ -638,95 +638,20 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         }
     }
     
-    //DefaultAddressDelegate Methods
-    /*func selectedDeliveryAddress(selectedAddress: [String : Address])
-    {
-        selectedAddDict = selectedAddress
-        self.dismiss(animated: true, completion: nil)
-    }*/
-    
     
     //AddressContainerViewDelegate Methods
-    func addressSaved()
-    {
-        self.dismiss(animated: false, completion: nil)
-        
-        let storyBoard = UIStoryboard(name: "Address", bundle:Bundle(for: Wardrober.self))
-        let defaultAddVC = storyBoard.instantiateViewController(withIdentifier: "DefaultAddressViewController") as? DefaultAddressVC
-        
-        let addressNavigationVC = UINavigationController.init(rootViewController: defaultAddVC!)
-        
-        self.present(addressNavigationVC, animated: false, completion: nil)
-    }
+    /*func addressSaved()
+     {
+     self.dismiss(animated: false, completion: nil)
+     
+     let storyBoard = UIStoryboard(name: "Address", bundle:Bundle(for: Wardrober.self))
+     let defaultAddVC = storyBoard.instantiateViewController(withIdentifier: "DefaultAddressViewController") as? DefaultAddressVC
+     
+     let addressNavigationVC = UINavigationController.init(rootViewController: defaultAddVC!)
+     
+     self.present(addressNavigationVC, animated: false, completion: nil)
+     }*/
     
-    func getAddressService()
-    {
-        self.activityView.startAnimating()
-        
-        let userCustomerId = UserDefaults.standard.string(forKey: Constants.kSignedInUserID)
-        
-        let urlString = String(format: "%@/GetShippingAddress/%@", arguments: [Urls.stanleyKorshakUrl,userCustomerId!]);
-        
-        //self.addressArray.removeAll()
-        
-        FAServiceHelper().get(url: urlString, completion : { (success : Bool?, message : String?, responseObject : AnyObject?) in
-            
-            self.activityView.stopAnimating()
-            
-            guard success == true else
-            {
-                return
-            }
-            
-            guard responseObject == nil else
-            {
-                //self.addressArray =  AddressDetailesHelper.getAddressHelper(responseObject! as AnyObject?)
-                
-                if let getShippingAddResultsDict = responseObject!["GetShippingAddressResult"] as? NSDictionary
-                {
-                    if let _ = getShippingAddResultsDict["Error"] as? NSNull
-                    {
-                        if let resultsArray = getShippingAddResultsDict["Results"] as? [NSDictionary]
-                        {
-                            if resultsArray.count > 0
-                            {
-                                self.presentDefaultAddressController()
-                            }
-                            else
-                            {
-                                self.presentaddContainer()
-                            }
-                        }
-                    }
-                }
-                return
-            }
-        })
-    }
-    
-   
-    
-    func presentaddContainer()
-    {
-        let storyBoard = UIStoryboard(name: "Address", bundle:Bundle(for: Wardrober.self))
-        let addContainerVC = storyBoard.instantiateViewController(withIdentifier: "AddContainerViewController") as? AddContainerVC
-        addContainerVC!.fromWhichController = "HomeContainerVC"
-        addContainerVC!.delegate = self
-        let addContainerNavController = UINavigationController.init(rootViewController: addContainerVC!)
-        
-        self.present(addContainerNavController, animated: true, completion: nil)
-    }
-    
-    func presentDefaultAddressController()
-    {
-        let storyBoard = UIStoryboard(name: "Address", bundle:Bundle(for: Wardrober.self))
-        let defaultAddVC = storyBoard.instantiateViewController(withIdentifier: "DefaultAddressViewController") as? DefaultAddressVC
-       
-        let addressNavigationVC = UINavigationController.init(rootViewController: defaultAddVC!)
-        
-        self.present(addressNavigationVC, animated: true, completion: nil)
-    }
-
     
     // MARK : - UINavigationController Delegate
     
@@ -739,7 +664,7 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         {
             self.disableButtons([self.homeButton])
             self.selectButtons([self.homeButton])
-
+            
             self.selectedButton = self.homeButton
         }
         else if viewController.isKind(of: WardrobeVC.self)
@@ -747,7 +672,7 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
             self.disableButtons([self.wardrobeButton])
             self.selectButtons([self.wardrobeButton])
             self.selectedButton = self.wardrobeButton
-
+            
         }
         else if viewController.isKind(of: ModelVC.self)
         {
@@ -763,24 +688,8 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         }
     }
     
-    
-    // MARK: - Tutorial
-    
-    @objc func presentTutorial()
-    {
-        //print("tutorial tapped")
-        let storyBoard = UIStoryboard(name: "Main", bundle:Bundle(for: Wardrober.self))
-        let tutorialVC = storyBoard.instantiateViewController(withIdentifier: "FATutorialViewController") as? FATutorialViewController
-        
-        tutorialVC!.delegate = self
-        self.present(tutorialVC!, animated: true, completion:
-        {
-            //print("after siginNavController animation finished")
-        })
-    }
-    
     // MARK: - FATutorial View Controller Delegate
-
+    
     func tutorialVCDidTapStartShopping(_ tutorialVC: FATutorialViewController)
     {
         self.dismiss(animated: true)
@@ -807,6 +716,124 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
     {
         return UIInterfaceOrientation.portrait
     }
-
+    
+    /*func checkItemsAvailablity()
+     {
+     var checkAvailablityItems = [[String: String]]()
+     
+     for item in FACart.sharedCart().getCartItems()
+     {
+     var dict = [String : String]()
+     dict["ProductItemID"] = item.itemProductID
+     dict["Size"] = item.sizeSelected?.itemSizeName
+     //print(item.sizeSelected?.itemSizeName!)
+     
+     checkAvailablityItems.append(dict)
+     }
+     
+     let cartItems = ["Cartitems" : checkAvailablityItems]
+     print(cartItems)
+     
+     //self.activityView.startAnimating()
+     
+     let urlString = String(format: "http://65.19.149.190/dev.stanleykorshakv1/ClientApi/WardrobeClientApi.svc/CheckProductAvailability")
+     
+     self.avilabilities.removeAll()
+     
+     FAServiceHelper().post(url: urlString, parameters: cartItems as NSDictionary  , completion : { (success : Bool?, message : String?, responseObject : AnyObject?) in
+     
+     //self.activityView.stopAnimating()
+     
+     guard success == true else
+     {
+     let alert=UIAlertController(title: "Alert", message: message, preferredStyle: UIAlertControllerStyle.alert);
+     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil));
+     
+     self.present(alert, animated: true, completion: nil)
+     
+     return
+     }
+     guard responseObject == nil else
+     {
+     self.avilabilities =  AvailabilityHelper.getAvailabilityHelper(responseObject! as AnyObject?)!
+     
+     for item in self.avilabilities
+     {
+     let productID = item.productItemID as Int
+     let avilable = item.avilability
+     //let avilable = false
+     let size = item.size
+     let productName = item.productName
+     
+     if avilable == false
+     {
+     print("This ID \(productID), Sold out")
+     
+     let productInfoDict : [String: String] = ["productName": productName!, "Size": size!]
+     
+     NotificationCenter.default.post(name: Notification.Name(rawValue: "SoldoutAlert"), object: nil,userInfo: productInfoDict)
+     
+     return
+     }
+     }
+     self.getAddressService()
+     return
+     }
+     })
+     }*/
+    
+    /*func getAddressService()
+     {
+     self.activityView.startAnimating()
+     
+     let userCustomerId = UserDefaults.standard.string(forKey: Constants.kSignedInUserID)
+     
+     let urlString = String(format: "%@/GetShippingAddress/%@", arguments: [Urls.stanleyKorshakUrl,userCustomerId!]);
+     
+     //self.addressArray.removeAll()
+     
+     FAServiceHelper().get(url: urlString, completion : { (success : Bool?, message : String?, responseObject : AnyObject?) in
+     
+     self.activityView.stopAnimating()
+     
+     guard success == true else
+     {
+     return
+     }
+     
+     guard responseObject == nil else
+     {
+     //self.addressArray =  AddressDetailesHelper.getAddressHelper(responseObject! as AnyObject?)
+     
+     if let getShippingAddResultsDict = responseObject!["GetShippingAddressResult"] as? NSDictionary
+     {
+     if let _ = getShippingAddResultsDict["Error"] as? NSNull
+     {
+     if let resultsArray = getShippingAddResultsDict["Results"] as? [NSDictionary]
+     {
+     if resultsArray.count > 0
+     {
+     self.presentDefaultAddressController()
+     }
+     else
+     {
+     self.presentaddContainer()
+     }
+     }
+     }
+     }
+     return
+     }
+     })
+     }*/
+    
+    //DefaultAddressDelegate Methods
+    /*func selectedDeliveryAddress(selectedAddress: [String : Address])
+     {
+     selectedAddDict = selectedAddress
+     self.dismiss(animated: true, completion: nil)
+     }*/
+    
+    
 }
 

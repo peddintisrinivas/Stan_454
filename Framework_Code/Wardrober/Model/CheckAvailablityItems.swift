@@ -14,4 +14,5 @@ class CheckAvailablityItems: NSObject
     var size : String!
     var avilability : Bool!
     var price : String!
+    var productName : String!
 }
