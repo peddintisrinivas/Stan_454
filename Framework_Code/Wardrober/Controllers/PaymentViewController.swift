@@ -96,7 +96,8 @@ class PaymentViewController: UIViewController, UIScrollViewDelegate, UITextField
     @IBOutlet weak var countryTextField: UITextField!
     @IBOutlet weak var zipPostalCodeTextField: UITextField!
     @IBOutlet weak var phoneTextField: UITextField!
-    
+    @IBOutlet weak var emailTextField: UITextField!
+
     
     //@IBOutlet weak var visaRadioButton: UIButton!
     //@IBOutlet weak var masterCardRadioButton: UIButton!
@@ -164,7 +165,11 @@ class PaymentViewController: UIViewController, UIScrollViewDelegate, UITextField
         /*expirationDateMMTextField.inputView = pickerView
         expirationDateYYTextField.inputView = pickerView*/
         
-        self.totalAmountLabel.text = "Total amount: \(amount)"
+        var totalPrice = UserDefaults.standard.string(forKey: Constants.kTotalPrice)
+       
+        totalPrice = totalPrice?.replacingOccurrences(of: "$", with: "", options: .literal, range: nil)
+
+        self.totalAmountLabel.text = "Total amount: \(String(describing: totalPrice!))"
 
         //self.setDatesArray()
         
@@ -209,7 +214,11 @@ class PaymentViewController: UIViewController, UIScrollViewDelegate, UITextField
             
             guard success == true else
             {
+                let alert=UIAlertController(title: "Error", message: "Error Fetching Credentials.Please try again.", preferredStyle: UIAlertControllerStyle.alert);
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil));
                 
+                self.present(alert, animated: true, completion: nil)
+
                 return
             }
             
@@ -618,12 +627,7 @@ class PaymentViewController: UIViewController, UIScrollViewDelegate, UITextField
     }
     
     
-    func callAddAddressAddOrderDetails()
-    {
-        
-        
-        
-    }
+    
     override func viewWillAppear(_ animated: Bool)
     {
         super.viewWillAppear(animated)
@@ -933,54 +937,60 @@ class PaymentViewController: UIViewController, UIScrollViewDelegate, UITextField
         }*/
          if(self.cardHolderNameTextField.text == nil || self.cardHolderNameTextField.text=="")
         {
-            status=false;
+            status=false
             self.showErrorAlert("Please enter Card Holder's Name");
+        }
+         else if !CommonHelper.isValidEmail(emailTextField.text!)
+        {
+            status=false
+            self.showErrorAlert("Email address not correct.")
+
         }
         else if(self.addressTextField.text == nil || self.addressTextField.text=="")
         {
-            status=false;
-            self.showErrorAlert("Please enter Billing Address");
+            status=false
+            self.showErrorAlert("Please enter Billing Address")
         }
         else if(self.cityTextField.text == nil || self.cityTextField.text=="")
         {
-            status=false;
-            self.showErrorAlert("Please enter City");
+            status=false
+            self.showErrorAlert("Please enter City")
         }
         else if(self.countryTextField.text == nil || self.countryTextField.text=="")
         {
             status=false;
-            self.showErrorAlert("Please enter Country");
+            self.showErrorAlert("Please enter Country")
         }
         else if(self.stateProvinceTextField.text == nil || self.stateProvinceTextField.text=="")
         {
             status=false;
-            self.showErrorAlert("Please enter State");
+            self.showErrorAlert("Please enter State")
             
         }
         else if(self.zipPostalCodeTextField.text == nil || self.zipPostalCodeTextField.text=="")
         {
             status=false;
-            self.showErrorAlert("Please enter Zip");
+            self.showErrorAlert("Please enter Zip")
         }
         else if(commonValidation.isValidNumeric(self.zipPostalCodeTextField.text!) == false)
         {
             status=false;
-            self.showErrorAlert("Zip Code should be numeric");
+            self.showErrorAlert("Zip Code should be numeric")
         }
             
         else if(self.phoneTextField.text == nil || self.phoneTextField.text=="")
         {
-            status=false;
-            self.showErrorAlert("Please enter Phone Number");
+            status=false
+            self.showErrorAlert("Please enter Phone Number")
         }
         else if(commonValidation.isValidNumeric(self.phoneTextField.text!) == false)
         {
-            status=false;
-            self.showErrorAlert("Phone number should be numeric");
+            status=false
+            self.showErrorAlert("Phone number should be numeric")
         }
         self.activityIndicatorAcceptSDKDemo.stopAnimating()
 
-        return status;
+        return status
         
     }
 
@@ -989,25 +999,21 @@ class PaymentViewController: UIViewController, UIScrollViewDelegate, UITextField
         if(validatePaymentForm() == true)
         {
         
-        self.postBillingAddressToServer()
+        self.sendBillingAddressToServer()
             
         }
        
     }
     
-func postBillingAddressToServer()
+func sendBillingAddressToServer()
 {
         self.activityIndicatorAcceptSDKDemo.startAnimating()
         
-        let urlString : String!
-        
-        let requestDict : [String : String]!
-        
         let userCustomerId = UserDefaults.standard.string(forKey: Constants.kSignedInUserID)
         
-            urlString = String(format: "%@/AddBillingAddress", arguments: [Urls.stanleyKorshakUrl])
+        let urlString = String(format: "%@/AddBillingAddress", arguments: [Urls.stanleyKorshakUrl])
             
-        requestDict = ["FullName":cardHolderNameTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),"AddressLine1":addressTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),"Phone":phoneTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),"City":cityTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),"State":stateProvinceTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),"ZIP":zipPostalCodeTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),"Country":"India","Customer_Id": userCustomerId!,"Cardnumber":self.cardNumberTextField.text!,"Expmo":self.expirationMonthTextField.text!,"Expyr":self.expirationYearTextField.text!,"Cvv":self.cardVerificationCodeTextField.text!,"BillingID":"1"]
+    let requestDict = ["FullName":cardHolderNameTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),"AddressLine1":addressTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),"AddressLine2":addressTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),"Phone":phoneTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),"City":cityTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),"State":stateProvinceTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),"Zip":zipPostalCodeTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),"Country":"India","Customer_Id": userCustomerId!,"BillingID":"0","Email":emailTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)]
        
         FAServiceHelper().post(url: urlString, parameters: requestDict as NSDictionary  , completion : { (success : Bool?, message : String?, responseObject : AnyObject?) in
             
@@ -1025,45 +1031,182 @@ func postBillingAddressToServer()
             guard responseObject == nil else
             {
                 
-                
-                let handler = AcceptSDKHandler(environment: AcceptSDKEnvironment.ENV_TEST)
-                
-                let request = AcceptSDKRequest()
-                request.merchantAuthentication.name = self.kClientName
-                request.merchantAuthentication.clientKey = self.kClientKey
-                
-                request.securePaymentContainerRequest.webCheckOutDataType.token.cardNumber = self.cardNumberBuffer
-                request.securePaymentContainerRequest.webCheckOutDataType.token.expirationMonth = self.cardExpirationMonth
-                request.securePaymentContainerRequest.webCheckOutDataType.token.expirationYear = self.cardExpirationYear
-                request.securePaymentContainerRequest.webCheckOutDataType.token.cardCode = self.cardVerificationCode
-                
-                
-                handler!.getTokenWithRequest(request, successHandler: { (inResponse:AcceptSDKTokenResponse) -> () in
-                    DispatchQueue.main.async(execute: {
-                        self.updateTokenButton(true)
-                        
-                        self.activityIndicatorAcceptSDKDemo.stopAnimating()
-                        print("Token--->%@", inResponse.getOpaqueData().getDataValue())
-                        var output = String(format: "Response: %@\nData Value: %@ \nDescription: %@", inResponse.getMessages().getResultCode(), inResponse.getOpaqueData().getDataValue(), inResponse.getOpaqueData().getDataDescriptor())
-                        output = output + String(format: "\nMessage Code: %@\nMessage Text: %@", inResponse.getMessages().getMessages()[0].getCode(), inResponse.getMessages().getMessages()[0].getText())
-                        self.callAddAddressAddOrderDetails()
-                        // self.textViewShowResults.text = output
-                        // self.textViewShowResults.textColor = UIColor.green
-                    })
-                }) { (inError:AcceptSDKErrorResponse) -> () in
-                    self.activityIndicatorAcceptSDKDemo.stopAnimating()
-                    self.updateTokenButton(true)
-                    
-                    let output = String(format: "Response:  %@\nError code: %@\nError text:   %@", inError.getMessages().getResultCode(), inError.getMessages().getMessages()[0].getCode(), inError.getMessages().getMessages()[0].getText())
-                    //self.textViewShowResults.text = output
-                    // self.textViewShowResults.textColor = UIColor.red
-                    print(output)
+                if let resultsArray = responseObject!["Results"] as? [NSDictionary]
+                {
+                    if resultsArray.count > 0
+                    {
+                        for dict in resultsArray
+                        {
+                            let billingAddressID = dict.object(forKey: "BillingAddresId") as! String
+                            UserDefaults.standard.setValue(billingAddressID, forKey: Constants.kBillingAddressID)
+                            UserDefaults.standard.synchronize()
+
+                            self.getAccessToken()
+                        }
+                    }
                 }
-           
+                else
+                {
+                    self.activityIndicatorAcceptSDKDemo.stopAnimating()
+
+                    let alert=UIAlertController(title: "Alert", message: message, preferredStyle: UIAlertControllerStyle.alert);
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil));
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+                    return
+
+                }
                 return
             }
             
         })
+    }
+  
+    func getAccessToken()
+    {
+        let handler = AcceptSDKHandler(environment: AcceptSDKEnvironment.ENV_TEST)
+        
+        let request = AcceptSDKRequest()
+        request.merchantAuthentication.name = self.kClientName
+        request.merchantAuthentication.clientKey = self.kClientKey
+        
+        request.securePaymentContainerRequest.webCheckOutDataType.token.cardNumber = self.cardNumberBuffer
+        request.securePaymentContainerRequest.webCheckOutDataType.token.expirationMonth = self.cardExpirationMonth
+        request.securePaymentContainerRequest.webCheckOutDataType.token.expirationYear = self.cardExpirationYear
+        request.securePaymentContainerRequest.webCheckOutDataType.token.cardCode = self.cardVerificationCode
+        
+        
+        handler!.getTokenWithRequest(request, successHandler: { (inResponse:AcceptSDKTokenResponse) -> () in
+            DispatchQueue.main.async(execute: {
+                self.updateTokenButton(true)
+                
+                self.activityIndicatorAcceptSDKDemo.stopAnimating()
+                print("Token--->%@", inResponse.getOpaqueData().getDataValue())
+                var output = String(format: "Response: %@\nData Value: %@ \nDescription: %@", inResponse.getMessages().getResultCode(), inResponse.getOpaqueData().getDataValue(), inResponse.getOpaqueData().getDataDescriptor())
+                output = output + String(format: "\nMessage Code: %@\nMessage Text: %@", inResponse.getMessages().getMessages()[0].getCode(), inResponse.getMessages().getMessages()[0].getText())
+                self.callAddOrderDetails(userAccessToken: inResponse.getOpaqueData().getDataValue())
+                // self.textViewShowResults.text = output
+                // self.textViewShowResults.textColor = UIColor.green
+            })
+        }) { (inError:AcceptSDKErrorResponse) -> () in
+            self.activityIndicatorAcceptSDKDemo.stopAnimating()
+            self.updateTokenButton(true)
+            
+            let output = String(format: "Response:  %@\nError code: %@\nError text:   %@", inError.getMessages().getResultCode(), inError.getMessages().getMessages()[0].getCode(), inError.getMessages().getMessages()[0].getText())
+           
+            let alert=UIAlertController(title: "Alert", message: output, preferredStyle: UIAlertControllerStyle.alert);
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil));
+            self.present(alert, animated: true, completion: nil)
+            print(output)
+        }
+    }
+    
+    func callAddOrderDetails(userAccessToken : String)
+    {
+        self.activityIndicatorAcceptSDKDemo.startAnimating()
+        
+        let userCustomerId = UserDefaults.standard.string(forKey: Constants.kSignedInUserID)
+        
+        let userBillingId = UserDefaults.standard.string(forKey: Constants.kBillingAddressID)
+
+        var totalPrice = UserDefaults.standard.string(forKey: Constants.kTotalPrice)
+      
+        totalPrice = totalPrice?.replacingOccurrences(of: "$", with: "", options: .literal, range: nil)
+
+        let urlString = String(format: "%@/AddOrderDetails", arguments: [Urls.stanleyKorshakUrl])
+        
+        var orderItemDetails = [[String: String]]()
+        
+        for item in FACart.sharedCart().getCartItems()
+        {
+            var dict = [String : String]()
+            dict["ProductItemID"] = item.itemProductID
+            dict["ProductItemName"] = item.itemName
+            dict["Qty"] = "1"
+            dict["ProductItemprice"] = item.price
+            dict["ProductSize"] = item.sizeSelected?.itemSizeName
+            orderItemDetails.append(dict)
+        }
+        
+        print(orderItemDetails)
+       
+        let requestDict = ["CustomerID":userCustomerId!,"BillingAddresID":userBillingId!,"ShippingAddresID": self.address.shippingAddressID,"TotalPrice" : totalPrice!,"LocalOrderId":"2","PaymentDataValue" : userAccessToken,"OrderItemDetails" : orderItemDetails] as NSDictionary
+        
+        print(requestDict)
+
+        FAServiceHelper().post(url: urlString, parameters: requestDict as NSDictionary, completion : { (success : Bool?, message : String?, responseObject : AnyObject?) in
+            
+            self.activityIndicatorAcceptSDKDemo.stopAnimating()
+            
+            guard success == true else
+            {
+                let alert=UIAlertController(title: "Alert", message: message, preferredStyle: UIAlertControllerStyle.alert);
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil));
+                
+                self.present(alert, animated: true, completion: nil)
+                
+                return
+            }
+            guard responseObject == nil else
+            {
+                self.activityIndicatorAcceptSDKDemo.stopAnimating()
+
+                if let resultsArray = responseObject!["Results"] as? [NSDictionary]
+                {
+                    if resultsArray.count > 0
+                    {
+                        for dict in resultsArray
+                        {
+                        var statusCode = "0"
+                        var orderID = "0"
+                        if let sts_code = dict["StatusCode"] as! String!
+                        {
+                         statusCode = sts_code
+                        }
+                            if statusCode == "1"
+                            {
+                               orderID = dict["OrderId"] as! String!
+                                
+                                self.showPaymentSuccessAlert()
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    let alert=UIAlertController(title: "Alert", message: message, preferredStyle: UIAlertControllerStyle.alert);
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil));
+                    
+                    self.present(alert, animated: true, completion: nil)
+                    
+                    return
+                }
+                return
+            }
+            
+        })
+    }
+    
+    func showPaymentSuccessAlert(){
+        
+        let alertView = UIAlertController(title: "Thanks", message: "Your payment is successfull. Thanks for shopping with us", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Okay", style: .default, handler: { (alert) in
+           
+            FACart.sharedCart().removeAllCartItems()
+
+            NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kMakeCartEmptyNotif), object: nil, userInfo: nil)
+
+            let cartItemsCountDict: [String: Any] = ["cartItemsCount": FACart.sharedCart().getCartCount(), "Notif": "Notif"]
+            
+            NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kItemsPresentInCartNotification), object: nil, userInfo: cartItemsCountDict)
+
+            self.dismiss(animated: true, completion: nil)
+
+        })
+        alertView.addAction(action)
+        self.present(alertView, animated: true, completion: nil)
+        
     }
   
 }

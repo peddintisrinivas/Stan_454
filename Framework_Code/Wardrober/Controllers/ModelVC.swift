@@ -12,25 +12,25 @@ import Photos
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
 fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
+    switch (lhs, rhs) {
+    case let (l?, r?):
+        return l < r
+    case (nil, _?):
+        return true
+    default:
+        return false
+    }
 }
 
 // FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
 // Consider refactoring the code to use the non-optional operators.
 fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l > r
-  default:
-    return rhs < lhs
-  }
+    switch (lhs, rhs) {
+    case let (l?, r?):
+        return l > r
+    default:
+        return rhs < lhs
+    }
 }
 
 
@@ -39,7 +39,7 @@ enum DragMode {
     case clothing_ITEM
     case wardrobe_PUT_BACK
     case none
-   }
+}
 
 enum ViewMode {
     case front
@@ -49,7 +49,7 @@ enum ViewMode {
 
 class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, ClothingItemImageViewDelegate, UIScrollViewDelegate, FAZoomVCDelegate, ItemsDetailVcDelegate,ShoppingCartDelegate
 {
-
+    
     // MARK: -  Category View
     @IBOutlet var categoryContainerView : UIView!
     @IBOutlet var categoryUnderlinerView : UIView!
@@ -58,7 +58,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     var selectedCategoryIndex = 0
     @IBOutlet var businessCategoryLabel : UILabel!
     @IBOutlet var categoryTopLinerView : UIView!
-
+    
     @IBOutlet var categoryCollectionView : UICollectionView!
     
     // MARK: -  Model Container View
@@ -79,7 +79,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     @IBOutlet var dragImgViewConstraintY : NSLayoutConstraint!
     @IBOutlet var dragImgViewConstraintWidth : NSLayoutConstraint!
     @IBOutlet var dragImgViewConstraintHeight : NSLayoutConstraint!
-
+    
     
     
     @IBOutlet var rearModelImage : UIImageView!
@@ -93,18 +93,18 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     @IBOutlet var rearEarringsImageView : ClothingItemImageView!
     
     @IBOutlet var hairRearImageView : ClothingItemImageView!
-
+    
     
     
     // MARK: -  Model View Mode
     var viewMode : ViewMode = ViewMode.front
     @IBOutlet var flipButton : UIButton!
     var fetchingRearAssets = false
-
+    
     @IBOutlet var actionPanel : UIView!
     @IBOutlet var screenshotButtonHConstraint : NSLayoutConstraint!
     @IBOutlet var shareButtonHConstraint : NSLayoutConstraint!
-
+    
     
     // MARK: -   Items Data Model
     var earringsArray : [ShoeItem] = []
@@ -113,7 +113,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     var bottomsArray : [ShoeItem] = []
     var shoeArray : [ShoeItem] = []
     
-
+    
     
     var currentEarringsItem : ShoeItem? = nil
     var currentTopMainItem : ShoeItem? = nil
@@ -140,10 +140,10 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     
     // MARK: -  Pagination Related
     var fetchingMoreTopItems = false
-    let pageSize = 2
+    let pageSize = 5
     let pageSizeSecondaryItems = 1
     let pageSizeSecondaryItemsLoadMore = 10
-
+    
     var firstDataLoad : Bool = false
     var secItemsDownloadQueue : [ClothingType : [ShoeItem : [ShoeItem]]] = [ClothingType.earrings : [:], ClothingType.top_SECONDARY : [:], ClothingType.top_MAIN : [:], ClothingType.shoes : [:]]
     var processingDownloadQueue = false
@@ -156,7 +156,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     let scale = UIScreen.main.scale
     var sizeFactor : CGPoint!
     var sizeFactorRear : CGPoint!
-
+    
     var frontModelSize : CGSize!
     var rearModelSize : CGSize!
     
@@ -174,7 +174,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     
     // MARK: -  Item Detail VC
     var itemsDetailsVC : ItemsDetailVC? = nil
-
+    
     
     // MARK: -  Dot Views
     @IBOutlet var earringsDotView : FADotView!
@@ -197,12 +197,12 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     var interactiveDotsOn : Bool! = false
     var tapRecogniser : UITapGestureRecognizer!
     var selectedAccessoryDotView : FADotView? = nil
-
     
-    // MARK: -  Info Popup 
+    
+    // MARK: -  Info Popup
     @IBOutlet weak var productContainerView: UIView!
     @IBOutlet weak var productInfoView: UIView!
-
+    
     @IBOutlet weak var dotView: UIView!
     @IBOutlet weak var designerLable: UILabel!
     @IBOutlet weak var costLable: UILabel!
@@ -219,11 +219,11 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     @IBOutlet weak var infoContainerView_Y_Constraint: NSLayoutConstraint!
     
     @IBOutlet weak var dotViewLeadingConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var brandLable_W_Constraint: NSLayoutConstraint!
-//    @IBOutlet weak var designerLable_W_Constraint: NSLayoutConstraint!
+    //    @IBOutlet weak var brandLable_W_Constraint: NSLayoutConstraint!
+    //    @IBOutlet weak var designerLable_W_Constraint: NSLayoutConstraint!
     
-
-
+    
+    
     
     var fontSize : CGFloat!
     let screenSize: CGRect = UIScreen.main.bounds
@@ -234,12 +234,12 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     
     
     
-
+    
     
     
     // MARK: -  Fade Out Timer
     var fadeOutTimer : Timer? = nil
-
+    
     
     
     // MARK: -  Zoom Controller
@@ -270,14 +270,14 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         
         //Naveen 15/12/2017
         /*if let infoPlistDict = Bundle.main.infoDictionary
-        {
-            if infoPlistDict["NSPhotoLibraryUsageDescription"] == nil
-            {
-                self.screenshotButtonHConstraint.constant = 0
-                self.shareButtonHConstraint.constant = 0
-                self.actionPanel.layoutIfNeeded()
-            }
-        }*/
+         {
+         if infoPlistDict["NSPhotoLibraryUsageDescription"] == nil
+         {
+         self.screenshotButtonHConstraint.constant = 0
+         self.shareButtonHConstraint.constant = 0
+         self.actionPanel.layoutIfNeeded()
+         }
+         }*/
         
         
         switch (Constants.deviceIdiom)
@@ -294,12 +294,12 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             ///print("Unspecified UI idiom")
             
         }
-
+        
         
         self.currentClothingTypeForSwap = ClothingType.bottom
-
+        
         self.dragDropImageView.alpha = 0
-
+        
         
         clothingItemsTableView.delegate = self
         clothingItemsTableView.dataSource = self
@@ -317,7 +317,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         self.bottomImageView.image = nil
         self.shoeImageView.image = nil
         self.earringsImageView.image = nil
-
+        
         self.topMainImageView.clothingType = ClothingType.top_MAIN
         self.topSecondaryImageView.clothingType = ClothingType.top_SECONDARY
         self.bottomImageView.clothingType = ClothingType.bottom
@@ -335,11 +335,11 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         self.rearBottomImageView.clothingType = ClothingType.bottom
         self.rearShoeImageView.clothingType = ClothingType.shoes
         self.rearEarringsImageView.clothingType = ClothingType.earrings
-//        self.rearTopMainImageView.isUserInteractionEnabled = false
-//        self.rearTopSecondaryImageView.isUserInteractionEnabled = false
-//        self.rearBottomImageView.isUserInteractionEnabled = false
-//        self.rearShoeImageView.isUserInteractionEnabled = false
-//        self.rearEarringsImageView.isUserInteractionEnabled = false
+        //        self.rearTopMainImageView.isUserInteractionEnabled = false
+        //        self.rearTopSecondaryImageView.isUserInteractionEnabled = false
+        //        self.rearBottomImageView.isUserInteractionEnabled = false
+        //        self.rearShoeImageView.isUserInteractionEnabled = false
+        //        self.rearEarringsImageView.isUserInteractionEnabled = false
         self.hairRearImageView.isUserInteractionEnabled = false
         
         self.rearTopMainImageView.delegate = self
@@ -349,16 +349,16 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         self.rearEarringsImageView.delegate = self
         self.rearModelImage.alpha = 0
         self.rearModelItemImagesContainerView.alpha = 0
-
+        
         
         ///adding pan gesture recognizer to main gesture view
         
-//        self.dragDropPanGestureRecogniser = UIPanGestureRecognizer(target: self, action: #selector(ModelVC.panGestureRecognized(_:)))
-//        dragDropPanGestureRecogniser.delegate = self
-//        self.view.addGestureRecognizer(dragDropPanGestureRecogniser)
+        //        self.dragDropPanGestureRecogniser = UIPanGestureRecognizer(target: self, action: #selector(ModelVC.panGestureRecognized(_:)))
+        //        dragDropPanGestureRecogniser.delegate = self
+        //        self.view.addGestureRecognizer(dragDropPanGestureRecogniser)
         
         ///adding long press gesture recognizer to main gesture view
-
+        
         self.dragDropLongPressGestureRecogniser = UILongPressGestureRecognizer(target: self, action: #selector(ModelVC.longPressGestureRecognized(_:)))
         dragDropLongPressGestureRecogniser.minimumPressDuration = 0.2
         dragDropLongPressGestureRecogniser.allowableMovement = 5000
@@ -369,7 +369,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         tapRecogniser.delegate = self
         self.view.addGestureRecognizer(tapRecogniser)
         
-
+        
         self.pinchRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(ModelVC.pinchGestureRecognized(_:)))
         pinchRecognizer.delegate = self
         self.view.addGestureRecognizer(pinchRecognizer)
@@ -381,7 +381,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         
         NotificationCenter.default.addObserver(self, selector: #selector(ModelVC.userSignedIn), name: NSNotification.Name(rawValue: Constants.kUserSuccessfullySignedInNotif), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(ModelVC.userSignedOut), name: NSNotification.Name(rawValue: Constants.kUserSuccessfullySignedOutNotif), object: nil)
-
+        
     }
     
     // MARK : - Sign In Status Notification
@@ -394,7 +394,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     {
         self.slideToCategoryAtIndex(self.selectedCategoryIndex, animated: false)
     }
-
+    
     // MARK: - wardrobe NSNotification Handling
     
     @objc func anItemWasAddedToWardrobe()
@@ -403,7 +403,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         if self.currentItemSelectedForInfoView != nil
         {
             self.refreshColorForCurrentInfoView()
-
+            
         }
     }
     
@@ -515,7 +515,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 CommonHelper.checkAndDownloadAsset(imageUrl: frontUrl, completion: { (success : Bool, errorMsg : String?) in
                     
                     self.setProgressHudHidden(true)
-
+                    
                     guard success == true else
                     {
                         ///print("failed to download front asset url (\(errorMsg!))")
@@ -525,14 +525,14 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                     self.modelImage.image = ClothingItemImageView.imageForImageUrl(url: frontUrl)
                     
                     self.setProgressHudHidden(false)
-
+                    
                     if let rearUrl = Wardrober.shared().modelConfig?.rearAssetUrl
                     {
                         CommonHelper.checkAndDownloadAsset(imageUrl: rearUrl, completion: { (success : Bool, errorMsg : String?) in
                             
                             
                             self.setProgressHudHidden(true)
-
+                            
                             if success == false
                             {
                                 ///print("failed to download rear asset url (\(errorMsg!))")
@@ -551,7 +551,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                         ///print("warning : rear Model Image url doesn't exist")
                         /////proceed
                         self.adjustModelImageAndRelatedComponents()
-
+                        
                     }
                     
                     
@@ -561,7 +561,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             {
                 //print("error : front Model Image url doesn't exist")
             }
-
+            
         }
     }
     
@@ -669,11 +669,11 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         self.modelContainerView.alpha = alphaValue
         
         self.productContainerView.alpha = alphaValue
-
+        
         self.clothingItemsTableView.alpha = alphaValue
         
         self.actionPanel.alpha = alphaValue
-
+        
     }
     
     func unfadeModelContainerView()
@@ -682,7 +682,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         
         self.modelContainerView.alpha = 1
     }
-
+    
     
     // MARK: - Category Container Related
     func slideToCategoryAtIndex(_ index : Int, animated : Bool)
@@ -740,14 +740,14 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 self.categoryContainerView.layoutIfNeeded()
                 
             }) { (finished) in
-               
+                
                 
                 self.topsMainArray.removeAll()
                 self.earringsArray.removeAll()
                 self.bottomsArray.removeAll()
                 self.topsSecArray.removeAll()
                 self.shoeArray.removeAll()
-
+                
                 
                 self.firstDataLoad = true
                 self.fetchingMoreTopItems  = true
@@ -803,14 +803,14 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             //self.categoryUnderlinerView.layoutIfNeeded()
             
             self.categoryContainerView.layoutIfNeeded()
-
+            
             
             self.topsMainArray.removeAll()
             self.earringsArray.removeAll()
             self.bottomsArray.removeAll()
             self.topsSecArray.removeAll()
             self.shoeArray.removeAll()
-
+            
             firstDataLoad = true
             self.fetchingMoreTopItems  = true
             
@@ -826,8 +826,8 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     
     @IBAction func categoryTapped(_ sender : UIButton!)
     {
-    
-
+        
+        
         if viewMode == ViewMode.rear
         {
             self.flipBtnTapped(self.flipButton)
@@ -846,7 +846,6 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     
     func fetchClothingItems(_ categoryID : String, startIndex : Int, pageSize : Int, secondaryItemsPageSize : Int)
     {
-        
         if startIndex == 1
         {
             self.setProgressHudHidden(false)
@@ -861,7 +860,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             customerID = UserDefaults.standard.object(forKey: Constants.kSignedInUserID) as! String!
             
         }
-        
+
         //call the service and get the data
         let url = String(format: "%@/%@", arguments: [Wardrober.shared().serviceMainUrl!,Urls.GetProductCatalogV2]);
         
@@ -972,7 +971,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
         }
         var url : String!
-        
+
         let parametersDict = ClothingItemsHelper.getRequestDictForFetchMoreSecondaryItems(mainTopID, customerID: customerID, startIndex: "\(startIndex)", pageSize: "\(pageSize)")
         
         switch type{
@@ -1099,7 +1098,6 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     
     func addItemToWardrobe(_ item : ShoeItem,  add: Bool)
     {
-        
         let userSignedIn =   UserDefaults.standard.bool(forKey: Constants.kUserSuccessfullySignedIn)
         
         if userSignedIn == false
@@ -1120,13 +1118,59 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             {
                 addOrRemove = "1"
             }
+
+        
+        let requestDict = WardrobeHelper.getRequestDictForAddToWardrobeService(custID, ProductItemID: itemID!, AddOrRemove: addOrRemove)
+        
+        FAServiceHelper().post(url: url, parameters: requestDict as NSDictionary  , completion : { (success : Bool?, message : String?, responseObject : AnyObject?) in
             
-            let requestDict = WardrobeHelper.getRequestDictForAddToWardrobeService(custID, ProductItemID: itemID!, AddOrRemove: addOrRemove)
-            
-            FAServiceHelper().post(url: url, parameters: requestDict as NSDictionary  , completion : { (success : Bool?, message : String?, responseObject : AnyObject?) in
+            guard success == true else
+            {
                 
-                guard success == true else
+                item.isAddedToWardrobe = !add
+                
+                self.refreshColorForDotViews()
+                if self.currentItemSelectedForInfoView?.itemProductID == itemID
                 {
+                    self.refreshColorForCurrentInfoView()
+                }
+                
+                let alert=UIAlertController(title: "Alert", message: message, preferredStyle: UIAlertControllerStyle.alert);
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil));
+                
+                self.present(alert, animated: true, completion: nil)
+                
+                if add == true
+                {
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kAddedToWardrobeNotification), object: nil)
+                }
+                else
+                {
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kRemovedFromWardrobeNotification), object: nil)
+                }
+                return
+            }
+            guard responseObject == nil else
+            {
+                
+                ///print(responseObject!)
+                
+                let (success, errorMsg) = WardrobeHelper.parseAddToWardrobeResponse(responseObject as AnyObject?)
+                
+                if success == true
+                {
+                    
+                    item.isAddedToWardrobe = add
+                    
+                    self.refreshColorForDotViews()
+                    if self.currentItemSelectedForInfoView?.itemProductID == itemID
+                    {
+                        self.refreshColorForCurrentInfoView()
+                    }
+                }
+                else
+                {
+                    ///print("add to Wishlist failed : \(errorMsg)")
                     
                     item.isAddedToWardrobe = !add
                     
@@ -1136,73 +1180,29 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                         self.refreshColorForCurrentInfoView()
                     }
                     
-                    let alert=UIAlertController(title: "Alert", message: message, preferredStyle: UIAlertControllerStyle.alert);
+                    
+                    let alert=UIAlertController(title: "Alert", message: errorMsg, preferredStyle: UIAlertControllerStyle.alert);
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil));
                     
                     self.present(alert, animated: true, completion: nil)
-                    
-                    if add == true
-                    {
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kAddedToWardrobeNotification), object: nil)
-                    }
-                    else
-                    {
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kRemovedFromWardrobeNotification), object: nil)
-                    }
-                    return
-                }
-                guard responseObject == nil else
-                {
-                    
-                    ///print(responseObject!)
-                    
-                    let (success, errorMsg) = WardrobeHelper.parseAddToWardrobeResponse(responseObject as AnyObject?)
-                    
-                    if success == true
-                    {
-                        
-                        item.isAddedToWardrobe = add
-                        
-                        self.refreshColorForDotViews()
-                        if self.currentItemSelectedForInfoView?.itemProductID == itemID
-                        {
-                            self.refreshColorForCurrentInfoView()
-                        }
-                    }
-                    else
-                    {
-                        ///print("add to Wishlist failed : \(errorMsg)")
-                        
-                        item.isAddedToWardrobe = !add
-                        
-                        self.refreshColorForDotViews()
-                        if self.currentItemSelectedForInfoView?.itemProductID == itemID
-                        {
-                            self.refreshColorForCurrentInfoView()
-                        }
-                        
-                        
-                        let alert=UIAlertController(title: "Alert", message: errorMsg, preferredStyle: UIAlertControllerStyle.alert);
-                        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: nil));
-                        
-                        self.present(alert, animated: true, completion: nil)
-                    }
-                    
-                    if add == true
-                    {
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kAddedToWardrobeNotification), object: nil)
-                    }
-                    else
-                    {
-                        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kRemovedFromWardrobeNotification), object: nil)
-                    }
-                    
-                    return
                 }
                 
-            })
+                if add == true
+                {
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kAddedToWardrobeNotification), object: nil)
+                }
+                else
+                {
+                    NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kRemovedFromWardrobeNotification), object: nil)
+                }
+                
+                return
+            }
             
-        }
+        })
+        
+    }
+    
     }
     
     // MARK: - SignIn Service Calls
@@ -1212,8 +1212,6 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kUserNotSignedIn), object: nil, userInfo: nil)
         
     }
-    
-        
     func setProgressHudHidden(_ hidden : Bool)
     {
         
@@ -1249,7 +1247,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             self.faAnimatedHanger.view.removeFromSuperview()
         }
     }
-
+    
     
     func checkForLoadMore(_ indexPath : IndexPath)
     {
@@ -1293,7 +1291,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         else
         {
             let downloadDictForCurrentItemType = self.secItemsDownloadQueue[self.currentClothingTypeForSwap!] as [ShoeItem : [ShoeItem]]!
-        
+            
             let downloadQueueForCurrentMainTop = downloadDictForCurrentItemType?[self.currentTopMainItem!]
             
             if downloadQueueForCurrentMainTop != nil
@@ -1313,7 +1311,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 {
                     ///////print("currentCount = \(currentCount)")
                     
-                   /// let middleIndexApprox = Int(ceil(Float(currentCount) / 2) - 1)
+                    /// let middleIndexApprox = Int(ceil(Float(currentCount) / 2) - 1)
                     
                     if indexPath.row == currentCount - 1
                     {
@@ -1323,13 +1321,13 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                             self.fetchingMoreSecItems = true
                             self.fetchMoreSecondaryItemsOfType(self.currentClothingTypeForSwap!, forMainTop: self.currentTopMainItem!.itemProductID, startIndex: currentCount + 1, pageSize: self.pageSizeSecondaryItemsLoadMore)
                         }
-                       
+                        
                     }
                     
                 }
-
+                
             }
- 
+            
         }
         
         
@@ -1348,7 +1346,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             CommonHelper.checkAndDownloadFrontAsset(item: mainItem) { (success : Bool, errorMsg : String?) in
                 
                 self.performSecondaryItemsDownloadForMainItem(mainItem)
-
+                
             }
             
             
@@ -1382,7 +1380,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
             
             
-
+            
         }
         
         //download TS items
@@ -1470,26 +1468,26 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         self.topsMainArray.append(mainTopItem)
         ///print("appending \(mainTopItem)")
         self.lastItemReached = false
-
+        
         let pass = self.mainItemsArray.index(of: mainTopItem)
         
         if pass > 0
         {
-
-                ///reload TableView data
-                self.clothingItemsTableView.reloadSections(IndexSet(integer: 0), with: UITableViewRowAnimation.automatic)
-                self.view.layoutIfNeeded()
-                
-                ///print("pass \(pass)")
-                self.perform(#selector(ModelVC.downloadAssets), with: nil, afterDelay: 0.01)
             
-                
-                return
+            ///reload TableView data
+            self.clothingItemsTableView.reloadSections(IndexSet(integer: 0), with: UITableViewRowAnimation.automatic)
+            self.view.layoutIfNeeded()
+            
+            ///print("pass \(pass)")
+            self.perform(#selector(ModelVC.downloadAssets), with: nil, afterDelay: 0.01)
+            
+            
+            return
             
         }
         
         
-//        self.fetchingMoreTopItems = false
+        //        self.fetchingMoreTopItems = false
         
         self.earringsArray = self.mainItemsArray[0].earringsArray
         self.topsSecArray  = self.mainItemsArray[0].topSecArray
@@ -1513,7 +1511,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             selectedItemsArray.append(mainTopItem!)
             
             self.currentTopMainItem = mainTopItem
-
+            
         }
         else
         {
@@ -1598,7 +1596,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 clothingItemImageView.image = ClothingItemImageView.imageForImageUrl(url: shoeItem.itemImageURL!)
                 
                 
-               
+                
                 self.updateDotViewPositionFor(clothItem: shoeItem)
                 
             }
@@ -1607,8 +1605,8 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
             self.reorderImageViewsWithZOrder()
             self.refreshColorForDotViews()
-
-
+            
+            
             
         }
         
@@ -1631,7 +1629,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
             self.unhideDotViews(true)
             self.startFadeOutTimer()
-
+            
             self.actionPanel.alpha = 1
             
             if let currentSelectedItem =  self.getCurrentItemForClothingType(self.currentClothingTypeForSwap!)
@@ -1645,15 +1643,15 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 if let currentSelectedItem =  self.getCurrentItemForClothingType(self.currentClothingTypeForSwap!)
                 {
                     self.clothingItemImageViewDidTap(self.getImageViewForItem(currentSelectedItem))
-
+                    
                 }
             }
-
-            
-//            self.performSelector(#selector(ModelVC.downloadAssets), withObject: nil, afterDelay: 0.01)
             
             
-        }) 
+            //            self.performSelector(#selector(ModelVC.downloadAssets), withObject: nil, afterDelay: 0.01)
+            
+            
+        })
         
         
     }
@@ -1693,20 +1691,20 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                         
                     }
                     
-
+                    
                 }
                 else
                 {
                     self.secItemsDownloadQueue[self.currentClothingTypeForSwap!]?.removeValue(forKey: self.currentTopMainItem!)
                     
                     self.processingDownloadQueue = false
-                   /////// self.performSelector(#selector(ModelVC.processDownloadQueue), withObject: nil, afterDelay: 0.1)
+                    /////// self.performSelector(#selector(ModelVC.processDownloadQueue), withObject: nil, afterDelay: 0.1)
                 }
             }
             else
             {
                 self.processingDownloadQueue = false
-
+                
             }
             
         }
@@ -1738,7 +1736,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             if self.doesItemAlreadyExistsInArray(item, itemsArray: matchingTop!.earringsArray) == false
             {
                 matchingTop!.earringsArray.append(item)
-
+                
             }
             
             break
@@ -1749,7 +1747,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             {
                 matchingTop!.topSecArray.append(item)
             }
-
+            
             break
             
         case ClothingType.top_MAIN:
@@ -1758,12 +1756,12 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             {
                 matchingTop!.bottomsArray.append(item)
             }
-
+            
             break
             
             
         case ClothingType.shoes:
-
+            
             if self.doesItemAlreadyExistsInArray(item, itemsArray: matchingTop!.shoesArray) == false
             {
                 matchingTop!.shoesArray.append(item)
@@ -1784,7 +1782,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             self.view.layoutIfNeeded()
             
         }
-
+        
         
     }
     
@@ -1795,7 +1793,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         self.topsSecArray  = self.mainItemsArray[index].topSecArray
         self.bottomsArray  = self.mainItemsArray[index].bottomsArray
         self.shoeArray     = self.mainItemsArray[index].shoesArray
-
+        
     }
     
     
@@ -1901,28 +1899,28 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         
         
         
-
         
-//        if let item = self.currentEarringsItem
-//        {
-//            if item.rearItemImageURL == nil
-//            {
-//                if self.firstDataLoad == true
-//                {
-//                    self.firstDataLoad = false
-//                    
-//                    self.performSelector(#selector(ModelVC.downloadAssets), withObject: nil, afterDelay: 0.01)
-//                    
-//                }
-//                return
-//            }
-//            
-//            if item.isRearAssetDownloaded == false && item.isRearAssetDownloading == false && item.rearItemImageURL != nil
-//            {
-//                self.downloadRearAsset(forItem: item)
-//                return
-//            }
-//        }
+        
+        //        if let item = self.currentEarringsItem
+        //        {
+        //            if item.rearItemImageURL == nil
+        //            {
+        //                if self.firstDataLoad == true
+        //                {
+        //                    self.firstDataLoad = false
+        //
+        //                    self.performSelector(#selector(ModelVC.downloadAssets), withObject: nil, afterDelay: 0.01)
+        //
+        //                }
+        //                return
+        //            }
+        //
+        //            if item.isRearAssetDownloaded == false && item.isRearAssetDownloading == false && item.rearItemImageURL != nil
+        //            {
+        //                self.downloadRearAsset(forItem: item)
+        //                return
+        //            }
+        //        }
         
         self.flipButton.isEnabled = true
         
@@ -1931,9 +1929,9 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             self.firstDataLoad = false
             
             self.perform(#selector(ModelVC.downloadAssets), with: nil, afterDelay: 0.01)
-
+            
         }
-
+        
         
     }
     
@@ -1945,16 +1943,16 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             self.perform(#selector(ModelVC.checkRearAssets), with: nil, afterDelay: 0.01)
         }
         
-
+        
     }
     
     
     
-
+    
     
     
     // MARK: - Table View Data Source / Delegate methods
-
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if self.currentClothingTypeForSwap == nil
@@ -1965,7 +1963,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         return self.getCurrentArray().pointee.count
     }
     
-
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -1989,7 +1987,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 return 186
                 
             }
-
+            
         }
         
     }
@@ -1997,13 +1995,13 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "ClothingItemCell") as! ClothingItemCell
-
+        
         let itemsArray = self.getArrayForClothingType(self.currentClothingTypeForSwap!).pointee
         
         let shoeItem = itemsArray[indexPath.row]
-
+        
         cell.itemImageView.image = ClothingItemImageView.imageForImageUrl(url: shoeItem.itemImageURL!)
-
+        
         cell.designerNameLbl.text = shoeItem.designerName
         cell.itemNameLbl.text = shoeItem.itemName
         cell.priceLbl.text = shoeItem.price
@@ -2011,7 +2009,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         if lastItemReached == false && indexPath.row == self.getCurrentArrayFromMain().pointee.count - 1
         {
             self.lastItemReached = true
-
+            
             self.checkForLoadMore(indexPath)
         }
         
@@ -2027,7 +2025,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         
         self.invalidateFadeOutTimer()
     }
-
+    
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
         self.startFadeOutTimer()
@@ -2042,7 +2040,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     }
     
     // MARK: - Clothing Item Image View Delegate methods
-
+    
     func clothingItemImageViewDidTap(_ clothingItemImgView: ClothingItemImageView) {
         
         ///print("ClothingItemImageView tapped")
@@ -2068,7 +2066,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                     if self.viewMode == .front
                     {
                         self.displayInfoTag(forType: clothingItemImgView.clothingType!)
-
+                        
                     }
                     else{
                         self.displayInfoTagInRearMode(forType: clothingItemImgView.clothingType!)
@@ -2096,15 +2094,15 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                         
                     }
                     
-                    }, completion: { (finshed) in
-                        
-                        self.showJacketsButton.isUserInteractionEnabled = true
+                }, completion: { (finshed) in
+                    
+                    self.showJacketsButton.isUserInteractionEnabled = true
                 })
                 
             }
             
-
-
+            
+            
         }
         else
         {
@@ -2130,7 +2128,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             self.clothingItemsTableView.alpha = 1
             self.actionPanel.alpha = 1
         }
-
+        
     }
     
     
@@ -2149,14 +2147,14 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             }
             
             
-            }, completion: { (finished) in
-                
-                
-        }) 
+        }, completion: { (finished) in
+            
+            
+        })
         
     }
-
-
+    
+    
     
     // MARK: - hide Unhide Dot Views
     func unhideDotViews(_ unhide : Bool)
@@ -2166,7 +2164,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         self.modelItemImagesContainerView.bringSubview(toFront: self.topSecDotView)
         self.modelItemImagesContainerView.bringSubview(toFront: self.bottomDotView)
         self.modelItemImagesContainerView.bringSubview(toFront: self.shoesDotView)
-       
+        
         self.rearModelItemImagesContainerView.bringSubview(toFront: self.rearEarringsDotView)
         self.rearModelItemImagesContainerView.bringSubview(toFront: self.rearTopMainDotView)
         self.rearModelItemImagesContainerView.bringSubview(toFront: self.rearTopSecDotView)
@@ -2176,7 +2174,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         
         self.modelItemImagesContainerView.bringSubview(toFront: self.showJacketsButton)
         
-
+        
         if unhide == true
         {
             self.interactiveDotsOn = true
@@ -2230,16 +2228,16 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 self.rearShoesDotView.unhide(false)
                 
                 self.showJacketsButton.alpha = 0
-
+                
                 
                 self.productContainerView.alpha = 0
                 self.currentItemSelectedForInfoView = nil
-
+                
             })
             
         }
     }
-
+    
     
     func displayInfoTag(forType type : ClothingType)
     {
@@ -2365,7 +2363,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
         }
     }
-
+    
     
     
     
@@ -2374,7 +2372,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     {
         ///print(point)
         
-
+        
         let PROD_CONT_VIEW_WIDTH = CGFloat(176) // (CGFloat(174) / 414) * self.view.bounds.size.width
         
         
@@ -2386,7 +2384,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         
         let  y_point : CGFloat = point.y
         
-//        let selectedDot_X_Point = point.x - (32 - self.dotView.bounds.width/CGFloat(2))
+        //        let selectedDot_X_Point = point.x - (32 - self.dotView.bounds.width/CGFloat(2))
         
         
         
@@ -2465,8 +2463,8 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             self.designerLable.font = UIFont(name: "HelveticaNeue-Bold", size: self.fontSize)
             self.brandLable.text = item.itemName
             self.brandLable.font = UIFont(name: "HelveticaNeue", size: self.fontSize)
-//            self.brandLable_W_Constraint.constant = self.lableWidth
-//            self.designerLable_W_Constraint.constant = self.lableWidth
+            //            self.brandLable_W_Constraint.constant = self.lableWidth
+            //            self.designerLable_W_Constraint.constant = self.lableWidth
             self.productInfoView.layoutIfNeeded()
             
         }) { (finished) in
@@ -2505,28 +2503,28 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             earringsItem.sizeSelected = nil
             selectedItems.append(earringsItem)
         }
-
+        
         if let topSecItem = self.getCurrentItemForClothingType(ClothingType.top_SECONDARY)
         {
             topSecItem.sizeSelected = nil
             selectedItems.append(topSecItem)
         }
         
-
+        
         if let topmainItem = self.getCurrentItemForClothingType(ClothingType.top_MAIN)
         {
             topmainItem.sizeSelected = nil
             selectedItems.append(topmainItem)
         }
-      
-
+        
+        
         if let bottomItem = self.getCurrentItemForClothingType(ClothingType.bottom)
         {
             bottomItem.sizeSelected = nil
             selectedItems.append(bottomItem)
         }
         
-
+        
         if let shoeItem = self.getCurrentItemForClothingType(ClothingType.shoes)
         {
             shoeItem.sizeSelected = nil
@@ -2569,9 +2567,9 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         
         
         itemsDetailsVC!.itemsCollectionView.scrollToItem(at: IndexPath(item: itemsDetailsVC!.scrollToCenterItemIndex, section: 0), at: UICollectionViewScrollPosition.centeredHorizontally, animated: true)
-//        itemsDetailsVC!.itemsCollectionView.reloadData()
-//        itemsDetailsVC!.view.layoutIfNeeded()
-
+        //        itemsDetailsVC!.itemsCollectionView.reloadData()
+        //        itemsDetailsVC!.view.layoutIfNeeded()
+        
     }
     
     // MARK: - get DotView for item
@@ -2710,7 +2708,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         
         return imageView
     }
-
+    
     func getArrayForClothingType(_ clothingType : ClothingType) -> UnsafeMutablePointer<[ShoeItem]>
     {
         var array : UnsafeMutablePointer<[ShoeItem]>
@@ -2965,7 +2963,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             }
             
             self.updateDotViewPositionFor(clothItem: self.currentEarringsItem)
-
+            
             
         }
         
@@ -2974,13 +2972,13 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         {
             self.bottomDotView.isHidden = true
             self.rearBottomDotView.isHidden = true
-
+            
         }
         else
         {
             self.bottomDotView.isHidden = false
             self.rearBottomDotView.isHidden = false
-
+            
             if self.currentTopMainItem?.isAddedToWardrobe == true
             {
                 self.bottomDotView.setColorSelected(true)
@@ -2998,7 +2996,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             }
             
             self.updateDotViewPositionFor(clothItem: self.currentTopMainItem)
-
+            
             
         }
         
@@ -3032,7 +3030,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             }
             
             self.updateDotViewPositionFor(clothItem: self.currentTopSecItem)
-
+            
         }
         else
         {
@@ -3052,14 +3050,14 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             self.topMainDotView.isHidden = true
             
             self.rearTopMainDotView.isHidden = true
-
+            
         }
         else
         {
             self.topMainDotView.isHidden = false
             
             self.rearTopMainDotView.isHidden = false
-
+            
             if self.currentBottomItem?.isAddedToWardrobe == true
             {
                 self.topMainDotView.setColorSelected(true)
@@ -3080,7 +3078,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             }
             
             self.updateDotViewPositionFor(clothItem: self.currentBottomItem)
-
+            
         }
         
         
@@ -3088,13 +3086,13 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         {
             self.shoesDotView.isHidden = true
             self.rearShoesDotView.isHidden = true
-
+            
         }
         else
         {
             self.shoesDotView.isHidden = false
             self.rearShoesDotView.isHidden = false
-
+            
             if self.currentShoeItem?.isAddedToWardrobe == true
             {
                 self.shoesDotView.setColorSelected(true)
@@ -3115,7 +3113,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             }
             
             self.updateDotViewPositionFor(clothItem: self.currentShoeItem)
-
+            
         }
         
         
@@ -3123,7 +3121,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     
     func refreshColorForCurrentInfoView()
     {
-
+        
         if(self.currentItemSelectedForInfoView?.isAddedToWardrobe == true)
         {
             self.dotView.backgroundColor = Constants.dotSelectedColor
@@ -3138,7 +3136,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             self.productContainerView.layer.borderColor = UIColor.black.cgColor
             
         }
-       
+        
         
     }
     
@@ -3281,7 +3279,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     func reorderImageViewsWithZOrder()
     {
         var currentSelectedItemsArray = [ShoeItem]()
-
+        
         if self.currentTopMainItem != nil
         {
             currentSelectedItemsArray.append(self.currentTopMainItem!)
@@ -3304,14 +3302,14 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         }
         
         self.resetZOrderFor(items : currentSelectedItemsArray)
-
+        
         
         ///check for default Z order override behaviour for Top
-        if let mainTopItem = self.currentTopMainItem
+        if let mainTopItem = self.currentBottomItem
         {
             if mainTopItem.assetSizeSpecs.overridesDefaultZOrder == true
             {
-                if let bottomItem = self.currentBottomItem
+                if let bottomItem = self.currentTopMainItem
                 {
                     if mainTopItem.zOrder >= bottomItem.zOrder
                     {
@@ -3334,7 +3332,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         {
             if shoeItem.assetSizeSpecs.overridesDefaultZOrder == true
             {
-                if let bottomItem = self.currentBottomItem
+                if let bottomItem = self.currentTopMainItem
                 {
                     let zOrder = shoeItem.zOrder
                     if zOrder! <= bottomItem.zOrder
@@ -3342,9 +3340,9 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                         if self.shouldRespectTheZOrderSetting(higherZOrderItem: shoeItem, lowerZOrderItem: bottomItem) == true
                         {
                             shoeItem.zOrder = bottomItem.zOrder + 1
-//                            bottomItem.zOrder = shoeItem.zOrder - 1
+                            //                            bottomItem.zOrder = shoeItem.zOrder - 1
                         }
-
+                        
                     }
                 }
             }
@@ -3377,7 +3375,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             currentTopImageView = imageView
             
         }
-
+        
     }
     
     func setAndReorderRearImageViewsWithZOrder()
@@ -3406,15 +3404,15 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         }
         
         
-//        if self.currentEarringsItem != nil
-//        {
-//            currentSelectedItemsArray.append(self.currentEarringsItem!)
-//            self.rearEarringsImageView.hidden = false
-//        }
-//        else
-//        {
-//            self.rearEarringsImageView.hidden = true
-//        }
+        //        if self.currentEarringsItem != nil
+        //        {
+        //            currentSelectedItemsArray.append(self.currentEarringsItem!)
+        //            self.rearEarringsImageView.hidden = false
+        //        }
+        //        else
+        //        {
+        //            self.rearEarringsImageView.hidden = true
+        //        }
         
         
         if self.currentBottomItem != nil
@@ -3458,7 +3456,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         
         
         rearModelItemImagesContainerView.layoutIfNeeded()
-
+        
         
         currentSelectedItemsArray.sort(by: { (shoeItem1, shoeItem2) -> Bool in
             
@@ -3486,7 +3484,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
         }
         
-       view?.bringSubview(toFront: self.hairRearImageView)
+        view?.bringSubview(toFront: self.hairRearImageView)
         
     }
     
@@ -3762,7 +3760,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                             UIView.animate(withDuration: 0.3, animations: {
                                 
                                 cell.alpha = 0.3
-                               
+                                
                                 self.dragDropImageView.alpha = 1
                             })
                             
@@ -3786,7 +3784,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
             
             self.categoryCollectionView.isUserInteractionEnabled = true
-
+            
             
             
             if self.currentDragMode == DragMode.none
@@ -3808,15 +3806,17 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                     
                     
                     
-                    let userSignedIn =   UserDefaults.standard.bool(forKey: Constants.kUserSuccessfullySignedIn)
-                    if userSignedIn == false
-                    {
-                        self.presentSignIn()
-                        self.performCancelTagDragAnimation()
-                        return
-                    }
+                    //                    let userSignedIn =   UserDefaults.standard.bool(forKey: Constants.kUserSuccessfullySignedIn)
+                    //                    let userSignedIn = true
+                    //                    if userSignedIn == false
+                    //                    {
+                    //                        self.presentSignIn()
+                    //                        self.performCancelTagDragAnimation()
+                    //                        return
+                    //                    }
+                    
                     self.performTagAddedToWardrobeAnimation()
-
+                    
                 }
                 else
                 {
@@ -3853,7 +3853,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 
                 if itemWillBeSwappped == true
                 {
-
+                    
                     let imageView = self.getImageViewForItem(self.currentItemDragging!)
                     
                     
@@ -3863,80 +3863,80 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                         self.dragDropImageView.alpha = 0.7
                         self.dragDropImageView.layoutIfNeeded()
                         
-                        }, completion: { (finished) in
+                    }, completion: { (finished) in
+                        
+                        ///apply the dragged item asset to the mannequin
+                        ///update arrays in the background if needed
+                        ///set currentSelectedItem property appropriately
+                        ///reload table view to hide the dropped item
+                        
+                        let origin = self.view.convert(self.dragDropDestinationRect.origin, to: self.modelItemImagesContainerView)
+                        
+                        imageView.xConstraint.constant =  origin.x
+                        imageView.yConstraint.constant = origin.y
+                        imageView.widhtConstraint.constant = self.dragDropDestinationRect.size.width
+                        imageView.heightConstraint.constant = self.dragDropDestinationRect.size.height
+                        
+                        
+                        if self.currentItemDragging!.clothingType == ClothingType.bottom
+                        {
+                            self.autoApplySecondaryItemsIfExistForTheNewTop()
+                        }
+                        
+                        
+                        self.setCurrentItem(self.currentItemDragging!, forClothingType: self.currentClothingTypeForSwap!)
+                        
+                        
+                        self.flipButton.isEnabled = false
+                        self.perform(#selector(ModelVC.checkRearAssets), with: nil, afterDelay: 0.01)
+                        
+                        
+                        
+                        
+                        self.reorderImageViewsWithZOrder()
+                        self.refreshColorForDotViews()
+                        
+                        
+                        imageView.image = ClothingItemImageView.imageForImageUrl(url:self.currentItemDragging!.itemImageURL)
+                        self.view.layoutIfNeeded()
+                        self.dragDropImageView.alpha = 0
+                        
+                        
+                        ///reload TableView data
+                        
+                        let draggedItemIndex = self.getCurrentArray().pointee.index(of: self.currentItemDragging!)
+                        let indexPath = IndexPath(row: draggedItemIndex!, section: 0)
+                        
+                        self.lastItemReached = false
+                        
+                        self.clothingItemsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+                        
+                        
+                        UIView.animate(withDuration: 0.5, animations: {
                             
-                            ///apply the dragged item asset to the mannequin
-                            ///update arrays in the background if needed
-                            ///set currentSelectedItem property appropriately
-                            ///reload table view to hide the dropped item
-                            
-                            let origin = self.view.convert(self.dragDropDestinationRect.origin, to: self.modelItemImagesContainerView)
-                            
-                            imageView.xConstraint.constant =  origin.x
-                            imageView.yConstraint.constant = origin.y
-                            imageView.widhtConstraint.constant = self.dragDropDestinationRect.size.width
-                            imageView.heightConstraint.constant = self.dragDropDestinationRect.size.height
-                            
-                            
-                            if self.currentItemDragging!.clothingType == ClothingType.bottom
+                            for cell in self.clothingItemsTableView.visibleCells
                             {
-                                self.autoApplySecondaryItemsIfExistForTheNewTop()
+                                cell.alpha = 1
                             }
                             
+                        }, completion: { (finished) in
                             
-                            self.setCurrentItem(self.currentItemDragging!, forClothingType: self.currentClothingTypeForSwap!)
+                            self.unhideDotViews(true)
+                            self.startFadeOutTimer()
                             
+                            if self.currentClothingTypeForSwap == ClothingType.bottom
+                            {
+                                self.loadSecondaryItemsForTopIndex(draggedItemIndex!)
+                            }
                             
-                            self.flipButton.isEnabled = false
-                            self.perform(#selector(ModelVC.checkRearAssets), with: nil, afterDelay: 0.01)
+                            self.currentItemDragging = nil
                             
+                            self.currentDragMode = DragMode.none
                             
-                            
-                            
-                            self.reorderImageViewsWithZOrder()
-                            self.refreshColorForDotViews()
-
-                            
-                            imageView.image = ClothingItemImageView.imageForImageUrl(url:self.currentItemDragging!.itemImageURL)
-                            self.view.layoutIfNeeded()
-                            self.dragDropImageView.alpha = 0
-                            
-                            
-                            ///reload TableView data
-                            
-                            let draggedItemIndex = self.getCurrentArray().pointee.index(of: self.currentItemDragging!)
-                            let indexPath = IndexPath(row: draggedItemIndex!, section: 0)
-                            
-                            self.lastItemReached = false
-                            
-                            self.clothingItemsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-                            
-                            
-                            UIView.animate(withDuration: 0.5, animations: {
-                                
-                                for cell in self.clothingItemsTableView.visibleCells
-                                {
-                                    cell.alpha = 1
-                                }
-                                
-                                }, completion: { (finished) in
-                                    
-                                    self.unhideDotViews(true)
-                                    self.startFadeOutTimer()
-                                    
-                                    if self.currentClothingTypeForSwap == ClothingType.bottom
-                                    {
-                                        self.loadSecondaryItemsForTopIndex(draggedItemIndex!)
-                                    }
-                                    
-                                    self.currentItemDragging = nil
-                                    
-                                    self.currentDragMode = DragMode.none
-                                    
-                                    self.clothingItemImageViewDidTap(imageView)
-                            })
-                            
-                            
+                            self.clothingItemImageViewDidTap(imageView)
+                        })
+                        
+                        
                     })
                 }
                 else
@@ -3953,13 +3953,13 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                             cell.alpha = 1
                         }
                         
-                        }, completion: { (finished) in
-                            
-                            self.unhideDotViews(true)
-                            self.startFadeOutTimer()
-                            
-                            self.currentItemDragging = nil
-                            self.currentDragMode = DragMode.none
+                    }, completion: { (finished) in
+                        
+                        self.unhideDotViews(true)
+                        self.startFadeOutTimer()
+                        
+                        self.currentItemDragging = nil
+                        self.currentDragMode = DragMode.none
                     })
                 }
             }
@@ -4005,66 +4005,66 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                         
                         self.dragDropImageView.layoutIfNeeded()
                         
+                    }, completion: { (finished) in
+                        
+                        ///apply the dragged item asset to the mannequin
+                        ///update arrays in the background if needed
+                        ///set currentSelectedItem property appropriately
+                        ///reload table view to hide the dropped item
+                        
+                        let origin = self.view.convert(self.dragDropDestinationRect.origin, to: self.modelItemImagesContainerView)
+                        
+                        imageView.xConstraint.constant =  origin.x
+                        imageView.yConstraint.constant = origin.y
+                        imageView.widhtConstraint.constant = self.dragDropDestinationRect.size.width
+                        imageView.heightConstraint.constant = self.dragDropDestinationRect.size.height
+                        
+                        self.setCurrentItem(self.currentItemDragging!, forClothingType: self.currentClothingTypeForSwap!)
+                        
+                        
+                        
+                        self.reorderImageViewsWithZOrder()
+                        self.refreshColorForDotViews()
+                        
+                        
+                        imageView.image = ClothingItemImageView.imageForImageUrl(url:self.currentItemDragging!.itemImageURL)
+                        self.view.layoutIfNeeded()
+                        self.dragDropImageView.alpha = 0
+                        
+                        
+                        ///reload TableView data
+                        
+                        let draggedItemIndex = self.getCurrentArray().pointee.index(of: self.currentItemDragging!)
+                        let indexPath = IndexPath(row: draggedItemIndex!, section: 0)
+                        
+                        self.lastItemReached = false
+                        
+                        self.clothingItemsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+                        
+                        
+                        
+                        UIView.animate(withDuration: 0.5, animations: {
+                            
+                            for cell in self.clothingItemsTableView.visibleCells
+                            {
+                                cell.alpha = 1
+                            }
+                            
                         }, completion: { (finished) in
                             
-                            ///apply the dragged item asset to the mannequin
-                            ///update arrays in the background if needed
-                            ///set currentSelectedItem property appropriately
-                            ///reload table view to hide the dropped item
                             
-                            let origin = self.view.convert(self.dragDropDestinationRect.origin, to: self.modelItemImagesContainerView)
-                            
-                            imageView.xConstraint.constant =  origin.x
-                            imageView.yConstraint.constant = origin.y
-                            imageView.widhtConstraint.constant = self.dragDropDestinationRect.size.width
-                            imageView.heightConstraint.constant = self.dragDropDestinationRect.size.height
-                            
-                            self.setCurrentItem(self.currentItemDragging!, forClothingType: self.currentClothingTypeForSwap!)
+                            self.unhideDotViews(true)
+                            self.startFadeOutTimer()
                             
                             
+                            self.currentItemDragging = nil
                             
-                            self.reorderImageViewsWithZOrder()
-                            self.refreshColorForDotViews()
+                            self.currentDragMode = DragMode.none
                             
-                            
-                            imageView.image = ClothingItemImageView.imageForImageUrl(url:self.currentItemDragging!.itemImageURL)
-                            self.view.layoutIfNeeded()
-                            self.dragDropImageView.alpha = 0
-                            
-                            
-                            ///reload TableView data
-                            
-                            let draggedItemIndex = self.getCurrentArray().pointee.index(of: self.currentItemDragging!)
-                            let indexPath = IndexPath(row: draggedItemIndex!, section: 0)
-                            
-                            self.lastItemReached = false
-                            
-                            self.clothingItemsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-                            
-                            
-                            
-                            UIView.animate(withDuration: 0.5, animations: {
-                                
-                                for cell in self.clothingItemsTableView.visibleCells
-                                {
-                                    cell.alpha = 1
-                                }
-                                
-                                }, completion: { (finished) in
-                                    
-                                    
-                                    self.unhideDotViews(true)
-                                    self.startFadeOutTimer()
-                                    
-                                    
-                                    self.currentItemDragging = nil
-                                    
-                                    self.currentDragMode = DragMode.none
-                                    
-                                    self.clothingItemImageViewDidTap(imageView)
-                            })
-                            
-                            
+                            self.clothingItemImageViewDidTap(imageView)
+                        })
+                        
+                        
                     })
                 }
                 else
@@ -4081,43 +4081,43 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                             cell.alpha = 1
                         }
                         
-                        }, completion: { (finished) in
-                            
-                            
-                            self.unhideDotViews(true)
-                            self.startFadeOutTimer()
-                            
-                            
-                            ///reload TableView data
-                            
-                            let draggedItemIndex = self.getCurrentArray().pointee.index(of: self.currentItemDragging!)
-                            let indexPath = IndexPath(row: draggedItemIndex!, section: 0)
-                            
-                            self.lastItemReached = false
-                            
-                            
-                            self.setCurrentItem(nil, forClothingType: self.currentClothingTypeForSwap!)
-                            
-                            
-                            
-                            
-                            self.flipButton.isEnabled = false
-                            self.perform(#selector(ModelVC.checkRearAssets), with: nil, afterDelay: 0.01)
-                            
-                            
-                            self.clothingItemsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-                            
-                            
-                            self.currentItemDragging = nil
-                            self.currentDragMode = DragMode.none
-                            
-                            
-                            
-                            
+                    }, completion: { (finished) in
+                        
+                        
+                        self.unhideDotViews(true)
+                        self.startFadeOutTimer()
+                        
+                        
+                        ///reload TableView data
+                        
+                        let draggedItemIndex = self.getCurrentArray().pointee.index(of: self.currentItemDragging!)
+                        let indexPath = IndexPath(row: draggedItemIndex!, section: 0)
+                        
+                        self.lastItemReached = false
+                        
+                        
+                        self.setCurrentItem(nil, forClothingType: self.currentClothingTypeForSwap!)
+                        
+                        
+                        
+                        
+                        self.flipButton.isEnabled = false
+                        self.perform(#selector(ModelVC.checkRearAssets), with: nil, afterDelay: 0.01)
+                        
+                        
+                        self.clothingItemsTableView.reloadRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+                        
+                        
+                        self.currentItemDragging = nil
+                        self.currentDragMode = DragMode.none
+                        
+                        
+                        
+                        
                     })
                 }
             }
-
+            
             
             
             ///print("touch Ended")
@@ -4142,10 +4142,10 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 let newY = self.itemTagDragVC.startTagDragOrigin.y + translatedPoint.y
                 
                 let newPoint = CGPoint(x: newX, y: newY)
-            
-
+                
+                
                 self.itemTagDragVC.productContainerView_X_Constraint.constant =
-                newPoint.x
+                    newPoint.x
                 
                 self.itemTagDragVC.productContainerView_Y_Constraint.constant =
                     newPoint.y
@@ -4155,7 +4155,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 if translatedPoint.y > 0
                 {
                     ///WARDROBE
-
+                    
                     
                     let maxPropWidth =  (CGFloat(198) / CGFloat(414))
                     
@@ -4169,8 +4169,8 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                     
                     let applicablePropWidth = minPropWidth +  (( (originalDistance - currentDistance) / originalDistance) * diff)
                     
-
-
+                    
+                    
                     self.itemTagDragVC.wardrobeButtonWidthConstant.constant = applicablePropWidth * self.view.bounds.size.width
                     
                     
@@ -4199,7 +4199,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                     self.itemTagDragVC.cartButtonWidthConstant.constant = applicablePropWidth * self.view.bounds.size.width
                     
                     self.itemTagDragVC.cartView.layer.cornerRadius = self.itemTagDragVC.cartButtonWidthConstant.constant / 2
-
+                    
                     
                 }
                 else
@@ -4217,7 +4217,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 
                 self.itemTagDragVC.view.layoutIfNeeded()
                 
-
+                
                 if translatedPoint.y > 0
                 {
                     self.itemTagDragVC.productContainerView.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI_4))
@@ -4259,10 +4259,10 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 
                 
                 
-//                UIView.animateWithDuration(0.3, animations: {
-//                    
-//                    self.dragDropImageView.alpha = 1
-//                })
+                //                UIView.animateWithDuration(0.3, animations: {
+                //
+                //                    self.dragDropImageView.alpha = 1
+                //                })
                 
                 if clothingItemsTableView.alpha == 0
                 {
@@ -4340,9 +4340,9 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             clothingItemImageView.image = ClothingItemImageView.imageForImageUrl(url: item.itemImageURL!)
             
             self.updateDotViewPositionFor(clothItem: item)
-
+            
         }
-
+        
     }
     
     // MARK: - Tap to hide/unhide dots and display info
@@ -4361,7 +4361,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 self.unhideDotViews(false)
                 self.unhideTableView(false)
             }
-
+            
         }
         else
         {
@@ -4398,7 +4398,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             }
             else
             {
-               ///// return false    //putting back jacket disabled for now
+                ///// return false    //putting back jacket disabled for now
                 
                 let loc = gestureRecognizer.location(in: self.modelItemImagesContainerView)
                 
@@ -4412,17 +4412,17 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 }
                 
             }
-           
+            
         }
         else if gestureRecognizer == self.tapRecogniser
         {
             
             let location = gestureRecognizer.location(in: self.view)
-//            
-//            if self.clothingItemsTableView.alpha != 0 && self.clothingItemsTableView.frame.contains(location) == true
-//            {
-//                return false
-//            }
+            //
+            //            if self.clothingItemsTableView.alpha != 0 && self.clothingItemsTableView.frame.contains(location) == true
+            //            {
+            //                return false
+            //            }
             
             if self.categoryCollectionView.frame.contains(location) == true
             {
@@ -4455,7 +4455,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         
         self.unhideDotViews(false)
         //self.unhideTableView(false)
-
+        
         
     }
     
@@ -4475,20 +4475,20 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             ///print("fadeOutTimer invalidated")
         }
     }
-
+    
     
     // MARK: - PinchGesture Methods
-
+    
     @objc func pinchGestureRecognized(_ recognizer : UIPinchGestureRecognizer)
     {
         switch recognizer.state {
-       
+            
         case .began:
             
             
             if self.currentTopMainItem != nil
             {
-
+                
                 
                 if viewMode == ViewMode.front
                 {
@@ -4496,21 +4496,21 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                     
                     self.modelContainerView.isHidden = true
                     loadZoomVC()
- 
+                    
                 }
                 else
                 {
                     self.zoomStarted = true
                     
                     self.modelContainerView.isHidden = true
-                     loadZoomVcInRearMode()
-
+                    loadZoomVcInRearMode()
+                    
                 }
                 
             }
             
             break
-         
+            
         case .changed:
             
             if self.zoomStarted == true
@@ -4518,11 +4518,11 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 self.zoomVC.view.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: recognizer.scale / 2)
                 
                 self.zoomVC.scrollView.zoomScale = recognizer.scale
-
+                
             }
-
+            
             break
-        
+            
         case .ended, .cancelled:
             
             if self.zoomStarted == true
@@ -4545,7 +4545,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             }
             
             self.zoomStarted = false
-
+            
             
             break
             
@@ -4592,20 +4592,20 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             zoomController.topSecondaryImageView.image = self.topSecondaryImageView.image
             zoomController.bottomImageView.image = self.bottomImageView.image
             zoomController.shoeImageView.image = self.shoeImageView.image
-
+            
             ///earrings
             zoomController.earringsImageView.xConstraint.constant = self.earringsImageView.xConstraint.constant
             zoomController.earringsImageView.yConstraint.constant = self.earringsImageView.yConstraint.constant
             zoomController.earringsImageView.widhtConstraint.constant = self.earringsImageView.widhtConstraint.constant
             zoomController.earringsImageView.heightConstraint.constant = self.earringsImageView.heightConstraint.constant
-
+            
             ///top
             zoomController.topMainImageView.xConstraint.constant = self.topMainImageView.xConstraint.constant
             zoomController.topMainImageView.yConstraint.constant = self.topMainImageView.yConstraint.constant
             zoomController.topMainImageView.widhtConstraint.constant = self.topMainImageView.widhtConstraint.constant
             zoomController.topMainImageView.heightConstraint.constant = self.topMainImageView.heightConstraint.constant
             
-
+            
             
             ///sec top
             zoomController.topSecondaryImageView.xConstraint.constant = self.topSecondaryImageView.xConstraint.constant
@@ -4635,13 +4635,13 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
             
             let leadConstraintZoomScroll = NSLayoutConstraint(item: self.homeContainerVC.view, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: childView, attribute: NSLayoutAttribute.leading, multiplier: 1.0, constant: 0.0)
-//            let topConstraintZoomScroll = NSLayoutConstraint(item: self.homeContainerVC.view, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: childView, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 0.0)
+            //            let topConstraintZoomScroll = NSLayoutConstraint(item: self.homeContainerVC.view, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: childView, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 0.0)
             
             let topConstraintZoomScroll = NSLayoutConstraint(item: childView!, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.homeContainerVC.topLayoutGuide, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 0.0)
-
+            
             let trailConstraintZoomScroll = NSLayoutConstraint(item: self.homeContainerVC.view, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: childView, attribute: NSLayoutAttribute.trailing, multiplier: 1.0, constant: 0.0)
             let bottomConstraintZoomScroll = NSLayoutConstraint(item: self.homeContainerVC.view, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: childView, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 0.0)
-
+            
             self.homeContainerVC.view.addConstraint(leadConstraintZoomScroll)
             self.homeContainerVC.view.addConstraint(topConstraintZoomScroll)
             self.homeContainerVC.view.addConstraint(trailConstraintZoomScroll)
@@ -4652,10 +4652,10 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             childView?.backgroundColor = UIColor.clear
             
             self.reorderZoomImageViewsWithZOrder()
-
+            
             
         }
-
+        
     }
     
     
@@ -4679,8 +4679,8 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
             let leadConstraintZoomScroll = NSLayoutConstraint(item: self.homeContainerVC.view, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: childView, attribute: NSLayoutAttribute.leading, multiplier: 1.0, constant: 0.0)
             let topConstraintZoomScroll = NSLayoutConstraint(item: childView!, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.homeContainerVC.topLayoutGuide, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 0.0)
-
-//            let topConstraintZoomScroll = NSLayoutConstraint(item: self.homeContainerVC.view, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: childView, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 0.0)
+            
+            //            let topConstraintZoomScroll = NSLayoutConstraint(item: self.homeContainerVC.view, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: childView, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 0.0)
             let trailConstraintZoomScroll = NSLayoutConstraint(item: self.homeContainerVC.view, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: childView, attribute: NSLayoutAttribute.trailing, multiplier: 1.0, constant: 0.0)
             let bottomConstraintZoomScroll = NSLayoutConstraint(item: self.homeContainerVC.view, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: childView, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 0.0)
             
@@ -4708,7 +4708,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             zoomController.modelImage.removeConstraints([ zoomController.modelImageAspectConstraint])
             zoomController.modelImage.addConstraints([heightConstraint, aspectConstraint])
             
-
+            
             
             let modelContainerFrameWrtWindow = self.view.convert(self.modelContainerView.frame, to: self.homeContainerVC.view)
             
@@ -4773,7 +4773,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 zoomController.shoeImageView.isHidden = true
             }
             
-
+            
             
             ///earrings
             zoomController.earringsImageView.xConstraint.constant = self.rearEarringsImageView.xConstraint.constant
@@ -4818,7 +4818,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             zoomController.view.layoutIfNeeded()
             
             self.reorderZoomImageViewsWithZOrder()
-
+            
             
             
         }
@@ -4876,14 +4876,14 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
         }
         
-
+        
         view?.bringSubview(toFront: zoomVC.hairRearImageView)
         
     }
     
     
     
-
+    
     
     
     
@@ -4921,14 +4921,14 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     }
     
     func faZoomVCDidTapClose(_ zoomVC: FAZoomVC) {
-
+        
         self.zoomVC.view.removeFromSuperview()
         self.zoomVC.removeFromParentViewController()
         self.zoomVC = nil
         
         
         self.modelContainerView.isHidden = false
-
+        
     }
     
     
@@ -4944,7 +4944,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             let childView = dragVC.view
             childView?.translatesAutoresizingMaskIntoConstraints = false;
             childView?.clipsToBounds = true
-
+            
             
             self.homeContainerVC.addChildViewController(dragVC)
             dragVC.didMove(toParentViewController: self)
@@ -4953,7 +4953,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
             
             /// set the initial Product Container View constraints here
-           let productContainerFrameWrtWindow = self.view.convert(self.productContainerView.frame, to: self.homeContainerVC.view)
+            let productContainerFrameWrtWindow = self.view.convert(self.productContainerView.frame, to: self.homeContainerVC.view)
             
             dragVC.productContainerView_X_Constraint.constant = productContainerFrameWrtWindow.origin.x
             dragVC.productContainerView_Y_Constraint.constant = productContainerFrameWrtWindow.origin.y
@@ -4963,11 +4963,11 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
             dragVC.infoContainerView_W_Constraint.constant = self.infoContainerView_W_Constraint.constant
             dragVC.infoContainerView_H_Constraint.constant = self.infoContainerView_H_Constraint.constant
-
             
             
-//            dragVC.designerLable_W_Constraint.constant = self.designerLable.frame.size.width
-//            dragVC.brandLable_W_Constraint.constant = self.brandLable.frame.size.width
+            
+            //            dragVC.designerLable_W_Constraint.constant = self.designerLable.frame.size.width
+            //            dragVC.brandLable_W_Constraint.constant = self.brandLable.frame.size.width
             
             dragVC.view.layoutIfNeeded()
             
@@ -4988,10 +4988,10 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
             
             let leadConstraintDragView = NSLayoutConstraint(item: self.homeContainerVC.view, attribute: NSLayoutAttribute.leading, relatedBy: NSLayoutRelation.equal, toItem: childView, attribute: NSLayoutAttribute.leading, multiplier: 1.0, constant: 0.0)
-//            let topConstraintDragView = NSLayoutConstraint(item: self.homeContainerVC.view, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: childView, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 0.0)
+            //            let topConstraintDragView = NSLayoutConstraint(item: self.homeContainerVC.view, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: childView, attribute: NSLayoutAttribute.top, multiplier: 1.0, constant: 0.0)
             
             let topConstraintDragView = NSLayoutConstraint(item: childView!, attribute: NSLayoutAttribute.top, relatedBy: NSLayoutRelation.equal, toItem: self.homeContainerVC.topLayoutGuide, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 0.0)
-
+            
             let trailConstraintDragView = NSLayoutConstraint(item: self.homeContainerVC.view, attribute: NSLayoutAttribute.trailing, relatedBy: NSLayoutRelation.equal, toItem: childView, attribute: NSLayoutAttribute.trailing, multiplier: 1.0, constant: 0.0)
             let bottomConstraintDragView = NSLayoutConstraint(item: self.homeContainerVC.view, attribute: NSLayoutAttribute.bottom, relatedBy: NSLayoutRelation.equal, toItem: childView, attribute: NSLayoutAttribute.bottom, multiplier: 1.0, constant: 0.0)
             
@@ -5012,18 +5012,18 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     func closeItemTagDragView() {
         
         self.productContainerView.isHidden = false
-
+        
         UIView.animate(withDuration: 0.3, animations: {
             
             self.itemTagDragVC.view.alpha = 0
             
-            }, completion: { (finished) in
-                
-                self.itemTagDragVC.view.removeFromSuperview()
-                self.itemTagDragVC.removeFromParentViewController()
-                self.itemTagDragVC = nil
-                
-        }) 
+        }, completion: { (finished) in
+            
+            self.itemTagDragVC.view.removeFromSuperview()
+            self.itemTagDragVC.removeFromParentViewController()
+            self.itemTagDragVC = nil
+            
+        })
         
         
     }
@@ -5045,16 +5045,16 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
             self.itemTagDragVC.productContainerView.transform = CGAffineTransform.identity
             
-            }, completion: { (finished) in
-                
-                let dotView =  self.getDotViewForCurrentItem()
-                dotView.isHidden = false
-                
-                self.closeItemTagDragView()
-                self.currentDragMode = DragMode.none
-                
-                self.startFadeOutTimer()
-                
+        }, completion: { (finished) in
+            
+            let dotView =  self.getDotViewForCurrentItem()
+            dotView.isHidden = false
+            
+            self.closeItemTagDragView()
+            self.currentDragMode = DragMode.none
+            
+            self.startFadeOutTimer()
+            
         })
     }
     
@@ -5073,39 +5073,39 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
             self.itemTagDragVC.view.layoutIfNeeded()
             
+        }, completion: { (finished) in
+            
+            
+            UIView.animate(withDuration: 0.3, animations: {
+                
+                self.itemTagDragVC.wardrobeView.alpha = 0
+                self.itemTagDragVC.checkmarkView.alpha = 1
+                
             }, completion: { (finished) in
                 
+                let item = self.getCurrentItemForClothingType(self.currentClothingTypeForSwap!)
+                item?.isAddedToWardrobe = true
                 
-                UIView.animate(withDuration: 0.3, animations: {
+                self.refreshColorForDotViews()
+                self.refreshColorForCurrentInfoView()
+                
+                
+                self.addItemToWardrobe(self.currentItemSelectedForInfoView!, add: true)
+                
+                self.delay(0.3, closure: {
                     
-                    self.itemTagDragVC.wardrobeView.alpha = 0
-                    self.itemTagDragVC.checkmarkView.alpha = 1
-                    
-                    }, completion: { (finished) in
-                        
-                        let item = self.getCurrentItemForClothingType(self.currentClothingTypeForSwap!)
-                        item?.isAddedToWardrobe = true
-                        
-                        self.refreshColorForDotViews()
-                        self.refreshColorForCurrentInfoView()
-                        
-                        
-                        self.addItemToWardrobe(self.currentItemSelectedForInfoView!, add: true)
-                        
-                        self.delay(0.3, closure: {
-                            
-                            let dotView =  self.getDotViewForCurrentItem()
-                            dotView.isHidden = false
-                            self.closeItemTagDragView()
-                            self.currentDragMode = DragMode.none
-                            self.startFadeOutTimer()
-                        })
-                        
-                        
+                    let dotView =  self.getDotViewForCurrentItem()
+                    dotView.isHidden = false
+                    self.closeItemTagDragView()
+                    self.currentDragMode = DragMode.none
+                    self.startFadeOutTimer()
                 })
                 
                 
-                
+            })
+            
+            
+            
         })
     }
     
@@ -5125,20 +5125,20 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
             self.itemTagDragVC.view.layoutIfNeeded()
             
-            }, completion: { (finished) in
-                
-                let dotView =  self.getDotViewForCurrentItem()
-                dotView.isHidden = false
-                
-                
-                
-                self.closeItemTagDragView()
-                self.currentDragMode = DragMode.none
-                self.startFadeOutTimer()
-                
-                self.displayItemsDetailView()
-                
-                
+        }, completion: { (finished) in
+            
+            let dotView =  self.getDotViewForCurrentItem()
+            dotView.isHidden = false
+            
+            
+            
+            self.closeItemTagDragView()
+            self.currentDragMode = DragMode.none
+            self.startFadeOutTimer()
+            
+            self.displayItemsDetailView()
+            
+            
         })
     }
     
@@ -5146,12 +5146,14 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     // MARK: - Action Panel IBActions
     @IBAction func wardrobeBtnTapped(_ sender : UIButton)
     {
-        let userSignedIn =   UserDefaults.standard.bool(forKey: Constants.kUserSuccessfullySignedIn)
-        if userSignedIn == false
-        {
-            self.presentSignIn()
-            return
-        }
+        //        let userSignedIn =   UserDefaults.standard.bool(forKey: Constants.kUserSuccessfullySignedIn)
+        //        let userSignedIn = true
+        //        if userSignedIn == false
+        //        {
+        //            self.presentSignIn()
+        //            return
+        //        }
+        //
         let storyBoard = UIStoryboard(name: "Main", bundle:Bundle(for: Wardrober.self))
         if let wardrobeVC = storyBoard.instantiateViewController(withIdentifier: "WardrobeVC") as? WardrobeVC
         {
@@ -5169,10 +5171,10 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         let DURATION = 0.5
         if viewMode == ViewMode.front
         {
-
+            
             
             self.setAndReorderRearImageViewsWithZOrder()
-
+            
             self.rearModelImage.alpha = 1
             self.rearModelItemImagesContainerView.alpha = 1
             
@@ -5184,12 +5186,12 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
             UIView.transition(from: self.modelImage, to: self.rearModelImage, duration: DURATION, options: [UIViewAnimationOptions.transitionFlipFromRight, UIViewAnimationOptions.showHideTransitionViews]) { (finished) in
                 
-
+                
             }
             UIView.transition(from: self.modelItemImagesContainerView, to: self.rearModelItemImagesContainerView, duration: DURATION, options: [UIViewAnimationOptions.transitionFlipFromRight, UIViewAnimationOptions.showHideTransitionViews]) { (finished) in
                 
                 self.flipButton.isEnabled = true
-
+                
             }
             
             viewMode = ViewMode.rear
@@ -5199,9 +5201,9 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         }
         else
         {
-
+            
             self.hairRearImageView.isHidden = true
-
+            
             UIView.transition(from: self.rearModelImage, to: self.modelImage, duration: DURATION, options: [UIViewAnimationOptions.transitionFlipFromRight, UIViewAnimationOptions.showHideTransitionViews]) { (finished) in
                 
                 self.rearModelImage.alpha = 0
@@ -5209,13 +5211,13 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             UIView.transition(from: self.rearModelItemImagesContainerView, to: self.modelItemImagesContainerView, duration: DURATION, options: [UIViewAnimationOptions.transitionFlipFromRight, UIViewAnimationOptions.showHideTransitionViews]) { (finished) in
                 
                 self.rearModelItemImagesContainerView.alpha = 0
-
+                
                 self.flipButton.isEnabled = true
                 
             }
             
             viewMode = ViewMode.front
-
+            
         }
     }
     
@@ -5442,14 +5444,14 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
             
             self.showJacketsButton.isUserInteractionEnabled = true
             
-        }) 
+        })
         
     }
     
-
+    
     @IBAction func popupButtonTapped(_ sender: AnyObject)
     {
-    
+        
         var selectedItems = [ShoeItem]()
         
         if let earringsItem = self.getCurrentItemForClothingType(ClothingType.earrings)
@@ -5489,7 +5491,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         {
             return
         }
-       
+        
         self.loadingPopupVC(selectedItems)
     }
     
@@ -5529,14 +5531,14 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 NotificationCenter.default.post(name: WardroberNotifications.ItemAddedToCart, object: wrCartItem)
             }
             
-
+            
         }
         self.loadShoppingCartView()
         
-//        self.shoppingCartController.animateCheckoutButton()
-
+        //        self.shoppingCartController.animateCheckoutButton()
+        
     }
-
+    
     
     func loadShoppingCartView()
     {
@@ -5565,7 +5567,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
         self.homeContainerVC.view.addConstraint(bottomConstraintPopupView)
         
         self.homeContainerVC.view.layoutIfNeeded()
-
+        
     }
     
     func shoppingCartDidTapBackButton(_ shoppingCart: ShoppingCart!)
@@ -5579,7 +5581,7 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     {
         NotificationCenter.default.removeObserver(self)
     }
-
+    
     
 }
 
@@ -5623,7 +5625,7 @@ extension ModelVC : UICollectionViewDataSource, UICollectionViewDelegate, UIColl
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
+        
         if viewMode == ViewMode.rear
         {
             self.flipBtnTapped(self.flipButton)
@@ -5632,19 +5634,19 @@ extension ModelVC : UICollectionViewDataSource, UICollectionViewDelegate, UIColl
         
         self.fadeModelContainerView(0)
         
-
+        
         
         self.selectedCategoryIndex = indexPath.row
         
         collectionView.reloadData()
-
+        
         self.slideToCategoryAtIndex(selectedCategoryIndex, animated: true)
         
     }
     
     @objc func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-         let category = Wardrober.shared().categories[indexPath.row]
+        let category = Wardrober.shared().categories[indexPath.row]
         
         let font = UIFont(name: "HelveticaNeue-Bold", size: 12)
         
@@ -5673,3 +5675,4 @@ extension String {
         return boundingBox.width
     }
 }
+

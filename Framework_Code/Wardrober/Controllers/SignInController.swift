@@ -210,7 +210,7 @@ class SignInController: UIViewController, UITextFieldDelegate
                 
                 request.allHTTPHeaderFields = ["Content-Type":"application/json; charset=utf-8", Urls.AccessToken: Wardrober.shared().serviceAccessToken!]
                 
-                let requestDict = ["UserName":emailTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),"Password":passwordTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)];
+                let requestDict = ["UserName":emailTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines),"Password":passwordTextField.text!.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)]
                 
                 request.httpBody = try! JSONSerialization.data(withJSONObject: requestDict, options: [])
                 

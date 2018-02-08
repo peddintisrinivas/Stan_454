@@ -952,11 +952,46 @@
                                                                     <constraint firstItem="IaC-Sx-i4Y" firstAttribute="top" secondItem="ocO-Pp-f0I" secondAttribute="top" id="qev-b6-aon"/>
                                                                 </constraints>
                                                             </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="74Y-hR-WOB" userLabel="EmailView">
+                                                                <rect key="frame" x="5" y="250" width="365" height="22"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pTM-Q9-Ham">
+                                                                        <rect key="frame" x="0.0" y="2" width="120" height="21"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="height" constant="21" id="VUA-i3-TpI"/>
+                                                                            <constraint firstAttribute="width" constant="120" id="utL-MO-16y"/>
+                                                                        </constraints>
+                                                                        <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="13"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="YGs-ef-A0f">
+                                                                        <rect key="frame" x="125" y="0.0" width="240" height="22"/>
+                                                                        <nil key="textColor"/>
+                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                        <textInputTraits key="textInputTraits" autocorrectionType="no"/>
+                                                                        <connections>
+                                                                            <outlet property="delegate" destination="0dg-xx-kuE" id="pvl-bh-nJN"/>
+                                                                        </connections>
+                                                                    </textField>
+                                                                </subviews>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <constraints>
+                                                                    <constraint firstItem="YGs-ef-A0f" firstAttribute="leading" secondItem="pTM-Q9-Ham" secondAttribute="trailing" constant="5" id="8RG-Kg-2JR"/>
+                                                                    <constraint firstItem="YGs-ef-A0f" firstAttribute="top" secondItem="74Y-hR-WOB" secondAttribute="top" id="EBi-gy-8vY"/>
+                                                                    <constraint firstItem="pTM-Q9-Ham" firstAttribute="top" secondItem="74Y-hR-WOB" secondAttribute="top" constant="2" id="Ifb-OS-7az"/>
+                                                                    <constraint firstItem="pTM-Q9-Ham" firstAttribute="leading" secondItem="74Y-hR-WOB" secondAttribute="leading" id="KY9-g1-z7z"/>
+                                                                    <constraint firstAttribute="bottom" secondItem="YGs-ef-A0f" secondAttribute="bottom" id="Wi2-PX-4y0"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="YGs-ef-A0f" secondAttribute="trailing" id="bx0-T8-4lv"/>
+                                                                </constraints>
+                                                            </view>
                                                         </subviews>
                                                         <constraints>
+                                                            <constraint firstItem="74Y-hR-WOB" firstAttribute="leading" secondItem="ocO-Pp-f0I" secondAttribute="leading" id="2s1-UC-LEo"/>
                                                             <constraint firstItem="Msc-ki-sFD" firstAttribute="trailing" secondItem="eu9-80-97Y" secondAttribute="trailing" id="8gb-aj-TuL"/>
                                                             <constraint firstItem="u5T-GA-C5L" firstAttribute="top" secondItem="N6r-es-mGO" secondAttribute="top" id="9pv-ob-40j"/>
                                                             <constraint firstItem="EVT-VW-MvZ" firstAttribute="height" secondItem="u5T-GA-C5L" secondAttribute="height" id="AK6-RU-V46"/>
+                                                            <constraint firstItem="74Y-hR-WOB" firstAttribute="top" secondItem="ocO-Pp-f0I" secondAttribute="bottom" constant="16" id="C1E-Zt-qDI"/>
                                                             <constraint firstItem="coB-7Q-kI7" firstAttribute="height" secondItem="h4f-Bc-jSv" secondAttribute="height" id="HmX-dR-oOt"/>
                                                             <constraint firstItem="mcl-Mc-ejJ" firstAttribute="top" secondItem="coB-7Q-kI7" secondAttribute="bottom" constant="45" id="IfD-Gz-Bup"/>
                                                             <constraint firstAttribute="trailing" secondItem="coB-7Q-kI7" secondAttribute="trailing" constant="35" id="IrC-rO-jV2"/>
@@ -988,6 +1023,7 @@
                                                             <constraint firstItem="Msc-ki-sFD" firstAttribute="leading" secondItem="eu9-80-97Y" secondAttribute="leading" id="wAp-1f-eeb"/>
                                                             <constraint firstItem="EVT-VW-MvZ" firstAttribute="leading" secondItem="VdG-x1-TGK" secondAttribute="trailing" constant="3" id="wo7-s1-sQY"/>
                                                             <constraint firstItem="Tez-8h-GqB" firstAttribute="leading" secondItem="Msc-ki-sFD" secondAttribute="leading" id="x4N-PU-faE"/>
+                                                            <constraint firstItem="74Y-hR-WOB" firstAttribute="trailing" secondItem="ocO-Pp-f0I" secondAttribute="trailing" id="zuX-pq-1hs"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eCG-Xm-8vi" userLabel="AddressView">
@@ -1275,6 +1311,7 @@
                         <outlet property="cashOnDeliveryView" destination="ezF-do-Y09" id="a01-UP-nnt"/>
                         <outlet property="cityTextField" destination="u0X-bh-JzI" id="bwU-bK-LdG"/>
                         <outlet property="countryTextField" destination="Hhp-z3-WIX" id="wvu-qJ-D2S"/>
+                        <outlet property="emailTextField" destination="YGs-ef-A0f" id="l2g-f5-Awb"/>
                         <outlet property="expirationMonthTextField" destination="gQD-fK-Tl9" id="6Nd-MY-9dG"/>
                         <outlet property="expirationYearTextField" destination="9yV-Un-TNk" id="ayR-Hq-Tfs"/>
                         <outlet property="payButton" destination="oNy-44-RN8" id="aPd-h7-6cg"/>

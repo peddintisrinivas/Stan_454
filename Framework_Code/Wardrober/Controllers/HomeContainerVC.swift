@@ -98,8 +98,6 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         
         NotificationCenter.default.addObserver(self, selector: #selector(HomeContainerVC.loadSignControllerFromItemDetailVC), name: NSNotification.Name(rawValue: Constants.kUserNotSignedInFromItemDetailVC) , object: nil)
         
-        
-
         self.presentHomeNavigationController();
         self.loadSlideMenuVC()
         

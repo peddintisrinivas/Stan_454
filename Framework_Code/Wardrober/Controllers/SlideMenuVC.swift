@@ -284,7 +284,6 @@ extension SlideMenuVC
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kItemsPresentInCartNotification), object: nil, userInfo: cartItemsCountDict)
 
-
                 self.userSignedIn = false
                 
                 sideMenuItemArray[3] = "LOGIN"

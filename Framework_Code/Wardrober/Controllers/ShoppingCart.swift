@@ -79,7 +79,8 @@ class ShoppingCart: UIViewController, CheckoutCellDelegate,UITableViewDataSource
         self.totolCostOfCheckOutItemsList = 0
         self.shoppingEstimateValue = 10
         
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(ShoppingCart.displayEmptyCart), name: NSNotification.Name(rawValue: Constants.kMakeCartEmptyNotif) , object: nil)
+
         checkoutBtn.layer.masksToBounds = true
         checkoutBtn.layer.cornerRadius = 20.0
 
@@ -102,6 +103,16 @@ class ShoppingCart: UIViewController, CheckoutCellDelegate,UITableViewDataSource
         
     }
     
+   @objc func displayEmptyCart()
+    {
+        if FACart.sharedCart().getCartCount() == 0
+        {
+            self.checkOutViewAnimatingToBottom()
+            self.showEmptyCartWithAnimation()
+            
+        }
+        
+    }
     @objc func soldOutAlert()
     {
         self.showAlertView("Error", AlertMessage: "Sold Out", AlertButtonTitle: "OK")
@@ -772,6 +783,9 @@ class ShoppingCart: UIViewController, CheckoutCellDelegate,UITableViewDataSource
         
         NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kCheckOutBtnTappedNotif), object: nil, userInfo: amount_addressDict)
         
+        UserDefaults.standard.setValue(self.orderTotolLble.text!, forKey: Constants.kTotalPrice)
+        UserDefaults.standard.synchronize()
+
         
         /*var wrCartItems = [WRCartItem]()
         for item in FACart.sharedCart().getCartItems()

@@ -73,11 +73,14 @@ struct Constants{
 
     static let kCheckOutBtnTappedNotif = "CheckOutTappedNotif"
     static let kItemsPresentInCartNotification = "CartItemAddedNotification"
-    
+    static let kMakeCartEmptyNotif = "cartEmptyNotification"
+
     static let kUserSuccessfullySignedIn = "userSignInSuccessfull"
     static let kSignedInUserID = "signedInUserID"
     static let kFirstLaunch = "firstLaunch"
-    
+    static let kBillingAddressID = "BillingAddresId"
+    static let kTotalPrice = "TotalPrice"
+
     static let kUserIdentifier = "WardroberUserIdentifier"
     static let kUserNotSignedIn = "UserNotSignedIn"
     static let kUserNotSignedInFromItemDetailVC = "UserNotSignedInFromItemDetailVC"
