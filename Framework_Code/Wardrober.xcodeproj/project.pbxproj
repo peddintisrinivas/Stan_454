@@ -27,7 +27,6 @@
 		84F540451FE7DECB0082EEDC /* FAAnimatedHanger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84F540441FE7DECB0082EEDC /* FAAnimatedHanger.swift */; };
 		B04DD853200E03D000B2F904 /* PaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04DD852200E03CE00B2F904 /* PaymentViewController.swift */; };
 		B06A5518200E11D3009276A2 /* CommonValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B06A5517200E11D0009276A2 /* CommonValidation.swift */; };
-		B0795AF8202AD19800403F80 /* AcceptSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0795ADB202AD19600403F80 /* AcceptSDK.framework */; };
 		B0795AF9202AD19800403F80 /* AcceptSDKBaseInterfaceBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0795ADE202AD19700403F80 /* AcceptSDKBaseInterfaceBuilder.swift */; };
 		B0795AFA202AD19800403F80 /* AcceptSDKBaseURLBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0795ADF202AD19700403F80 /* AcceptSDKBaseURLBuilder.swift */; };
 		B0795AFB202AD19800403F80 /* AcceptSDKTokenAPIBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0795AE0202AD19700403F80 /* AcceptSDKTokenAPIBuilder.swift */; };
@@ -180,8 +179,8 @@
 		84CFBBCA2008927900C3AE70 /* AddNewTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewTVC.swift; sourceTree = "<group>"; };
 		84F540441FE7DECB0082EEDC /* FAAnimatedHanger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAAnimatedHanger.swift; sourceTree = "<group>"; };
 		B04DD852200E03CE00B2F904 /* PaymentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentViewController.swift; sourceTree = "<group>"; };
+		B064FC07202C874700A6107B /* AcceptSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AcceptSDK.framework; path = "AcceptSDK-Framework/AcceptSDK.framework"; sourceTree = "<group>"; };
 		B06A5517200E11D0009276A2 /* CommonValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonValidation.swift; sourceTree = "<group>"; };
-		B0795ADB202AD19600403F80 /* AcceptSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AcceptSDK.framework; sourceTree = "<group>"; };
 		B0795ADE202AD19700403F80 /* AcceptSDKBaseInterfaceBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceptSDKBaseInterfaceBuilder.swift; sourceTree = "<group>"; };
 		B0795ADF202AD19700403F80 /* AcceptSDKBaseURLBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceptSDKBaseURLBuilder.swift; sourceTree = "<group>"; };
 		B0795AE0202AD19700403F80 /* AcceptSDKTokenAPIBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AcceptSDKTokenAPIBuilder.swift; sourceTree = "<group>"; };
@@ -310,7 +309,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B0795AF8202AD19800403F80 /* AcceptSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -325,6 +323,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B064FC0B202C8AE200A6107B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B0795ADC202AD19700403F80 /* AcceptSDK */ = {
 			isa = PBXGroup;
 			children = (
@@ -460,6 +465,7 @@
 				C524E21A1ECB1BB100F7D45B /* WardroberTests */,
 				C524E20E1ECB1BB100F7D45B /* Products */,
 				B0795B14202B1FC200403F80 /* Recovered References */,
+				B064FC0B202C8AE200A6107B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -475,8 +481,8 @@
 		C524E20F1ECB1BB100F7D45B /* Wardrober */ = {
 			isa = PBXGroup;
 			children = (
+				B064FC07202C874700A6107B /* AcceptSDK.framework */,
 				B0795ADC202AD19700403F80 /* AcceptSDK */,
-				B0795ADB202AD19600403F80 /* AcceptSDK.framework */,
 				B07C04D81EF286EF0005D944 /* FAProgressHud */,
 				B07C04D71EF286DF0005D944 /* FAImageDownloader */,
 				B07C04D61EF286CB0005D944 /* FAServiceClass */,
@@ -1038,6 +1044,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Wardrober",
+					"$(PROJECT_DIR)/Wardrober/AcceptSDK-Framework",
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				INFOPLIST_FILE = Wardrober/Info.plist;
@@ -1070,6 +1077,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Wardrober",
+					"$(PROJECT_DIR)/Wardrober/AcceptSDK-Framework",
 				);
 				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
 				INFOPLIST_FILE = Wardrober/Info.plist;

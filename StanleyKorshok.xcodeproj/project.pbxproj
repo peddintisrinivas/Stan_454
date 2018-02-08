@@ -511,6 +511,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(CONFIGURATION)",
 					"$(SRCROOT)/**",
+					"$(PROJECT_DIR)/Framework_Code/Wardrober/AcceptSDK-Framework",
 				);
 				INFOPLIST_FILE = StanleyKorshok/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -533,6 +534,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(CONFIGURATION)",
 					"$(SRCROOT)/**",
+					"$(PROJECT_DIR)/Framework_Code/Wardrober/AcceptSDK-Framework",
 				);
 				INFOPLIST_FILE = StanleyKorshok/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
