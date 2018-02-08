@@ -3804,16 +3804,13 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
                 {
                     ////Wardrobe
                     
-                    
-                    
-                    //                    let userSignedIn =   UserDefaults.standard.bool(forKey: Constants.kUserSuccessfullySignedIn)
-                    //                    let userSignedIn = true
-                    //                    if userSignedIn == false
-                    //                    {
-                    //                        self.presentSignIn()
-                    //                        self.performCancelTagDragAnimation()
-                    //                        return
-                    //                    }
+                    let userSignedIn =   UserDefaults.standard.bool(forKey: Constants.kUserSuccessfullySignedIn)
+                    if userSignedIn == false
+                    {
+                        self.presentSignIn()
+                        self.performCancelTagDragAnimation()
+                        return
+                    }
                     
                     self.performTagAddedToWardrobeAnimation()
                     
@@ -5146,14 +5143,13 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     // MARK: - Action Panel IBActions
     @IBAction func wardrobeBtnTapped(_ sender : UIButton)
     {
-        //        let userSignedIn =   UserDefaults.standard.bool(forKey: Constants.kUserSuccessfullySignedIn)
-        //        let userSignedIn = true
-        //        if userSignedIn == false
-        //        {
-        //            self.presentSignIn()
-        //            return
-        //        }
-        //
+        let userSignedIn =   UserDefaults.standard.bool(forKey: Constants.kUserSuccessfullySignedIn)
+        if userSignedIn == false
+        {
+            self.presentSignIn()
+            return
+        }
+        
         let storyBoard = UIStoryboard(name: "Main", bundle:Bundle(for: Wardrober.self))
         if let wardrobeVC = storyBoard.instantiateViewController(withIdentifier: "WardrobeVC") as? WardrobeVC
         {
