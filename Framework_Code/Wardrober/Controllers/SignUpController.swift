@@ -197,6 +197,8 @@ class SignUpController: UIViewController, UITextFieldDelegate
                                     
                                     self.delegate.signUpControllerDidRegisterSuccessfully(self)
                                     
+                                    NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kUserSuccessfullySignedInNotif), object: nil)
+                                    
                                 }
                                 else
                                 {

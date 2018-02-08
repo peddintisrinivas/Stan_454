@@ -244,6 +244,8 @@ class SignInController: UIViewController, UITextFieldDelegate
                                     
                                     self.delegate.signInControllerDidLogin(self)
                                     
+                                    NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kUserSuccessfullySignedInNotif), object: nil)
+                                    
                                 }
                                 else
                                 {

@@ -215,13 +215,13 @@ extension SlideMenuVC
             if userSignedIn == true
             {
                 titleLabel.text = "LOG OUT"
-                sideMenuItemArray[3] = "LOG OUT"
+                //sideMenuItemArray[3] = "LOG OUT"
 
             }
             else
             {
                 titleLabel.text = "LOGIN"
-                sideMenuItemArray[3] = "LOGIN"
+                //sideMenuItemArray[3] = "LOGIN"
 
             }
         }
@@ -230,72 +230,78 @@ extension SlideMenuVC
             titleLabel.text = sideMenuItemArray[indexPath.row]
 
         }
+        
+        titleLabel.font = UIFont(name: "HelveticaNeue-Light", size: self.fontSize)
         return cell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         tableView.deselectRow(at: indexPath, animated: false)
-    
-        if indexPath.row == 0
+        
+        switch indexPath.row
         {
+        case self.sideMenuItemArray.index(of: "Stanley Korshak")! :
             if userSignedIn == false
             {
                 //present sign in modally
+                
                 self.actionAfterLogin = ACTION_AFTER_LOGIN.wardrobe_SHOW
                 self.presentSignIn()
                 
             }
             else
             {
-                // present Wardrobe
+                /// present Wardrobe
                 self.homeContainerVC.WardrobeTapped(homeContainerVC.wardrobeButton)
                 
             }
-        }
-        else if indexPath.row == 1
-        {
-            print("Coming soon")
-        }
+            break
             
-        else if indexPath.row == 2
-        {
-            self.homeContainerVC.presentTutorial()
-        }
-            
-        if indexPath.row == 3
-        {
+        case self.sideMenuItemArray.index(of: "LOGIN")!:
             if userSignedIn == false
             {
                 //present sign in modally
+                
                 self.actionAfterLogin = ACTION_AFTER_LOGIN.none
                 self.presentSignIn()
+                
             }
             else
             {
+                /// sign out
+                
                 UserDefaults.standard.set(false, forKey: Constants.kUserSuccessfullySignedIn)
-                UserDefaults.standard.removeObject(forKey: Constants.kSignedInUserID)
                 
                 NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kUserSuccessfullySignedOutNotif), object: nil)
                 
-                FACart.sharedCart().removeAllCartItems()
-                
-                let cartItemsCountDict: [String: Any] = ["cartItemsCount": FACart.sharedCart().getCartCount(), "Notif": "Notif"]
-                
-                NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kItemsPresentInCartNotification), object: nil, userInfo: cartItemsCountDict)
-
                 self.userSignedIn = false
                 
-                sideMenuItemArray[3] = "LOGIN"
-                
                 self.reloadSlideMenuTable()
+                
+                FACart.sharedCart().removeAllCartItems()
+                 
+                 UserDefaults.standard.removeObject(forKey: Constants.kSignedInUserID)
+                 
+                 let cartItemsCountDict: [String: Any] = ["cartItemsCount": FACart.sharedCart().getCartCount(), "Notif": "Notif"]
+                 
+                 NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kItemsPresentInCartNotification), object: nil, userInfo: cartItemsCountDict)
             }
+            break
+            
+        case self.sideMenuItemArray.index(of: "TUTORIAL")!:
+            
+            self.homeContainerVC.presentTutorial()
+            
+            break
+            
+        default:
+            break
         }
     }
     
     func presentSignIn()
     {
-    
         let storyBoard = UIStoryboard(name: "SignIn", bundle: Bundle(for: Wardrober.self))
         let siginController = storyBoard.instantiateViewController(withIdentifier: "singIn") as? SignInController
         
@@ -307,10 +313,6 @@ extension SlideMenuVC
         {
             
         })
-        
-        //let signNavigationVC = UINavigationController.init(rootViewController: siginController!)
-        //let siginNavController = storyBoard.instantiateViewController(withIdentifier: "") as? UINavigationController
-        //let signInController = siginNavController?.viewControllers[0] as? SignInController
     }
     
     // MARK: - SignInDelegate methods

@@ -22,7 +22,7 @@ protocol ItemsDetailVcDelegate
 
 }
 
-class ItemsDetailVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ItemDetailCollectionViewCellDelegate, ShoppingCartDelegate, UIGestureRecognizerDelegate
+class ItemsDetailVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ItemDetailCollectionViewCellDelegate, ShoppingCartDelegate, UIGestureRecognizerDelegate,SignInDelegate
     
 {
     
@@ -1146,7 +1146,8 @@ class ItemsDetailVC: UIViewController, UICollectionViewDataSource, UICollectionV
     
     func itemDetailCellNeedsLogin(_ cell: ItemDetailCollectionViewCell!)
     {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kUserNotSignedInFromItemDetailVC), object: nil, userInfo: nil)
+        //NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kUserNotSignedInFromItemDetailVC), object: nil, userInfo: nil)
+        self.presentSignIn()
     }
     
     func shareBtnTapped(sender : Any)
@@ -1372,7 +1373,46 @@ class ItemsDetailVC: UIViewController, UICollectionViewDataSource, UICollectionV
         return edgeInsets
     }
     
+    func presentSignIn()
+    {
+        
+        let storyBoard = UIStoryboard(name: "SignIn", bundle:Bundle(for: Wardrober.self))
+        let siginController = storyBoard.instantiateViewController(withIdentifier: "singIn") as? SignInController
+        siginController!.delegate = self
+        
+        let signNavigationVC = UINavigationController.init(rootViewController: siginController!)
+        
+        self.present(signNavigationVC, animated: true, completion: nil)
+    }
     
+    
+    
+    // MARK: - SignInDelegate methods
+    
+    func signInControllerDidLogin(_ signInVC: SignInController)
+    {
+        signInVC.dismiss(animated: true)
+        {
+            let userSignedIn =   UserDefaults.standard.bool(forKey: Constants.kUserSuccessfullySignedIn)
+        }
+        
+    }
+    
+    func signUpControllerDidRegisterSuccessfully(_ signUpVC: SignUpController)
+    {
+        signUpVC.dismiss(animated: true)
+        {
+            let userSignedIn =   UserDefaults.standard.bool(forKey: Constants.kUserSuccessfullySignedIn)
+        }
+    }
+    
+    func signInControllerDidCancelLogin(_ signInVC: SignInController)
+    {
+        signInVC.dismiss(animated: true)
+        {
+            
+        }
+    }
 
     /*
      // MARK: - Navigation

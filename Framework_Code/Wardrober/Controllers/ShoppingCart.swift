@@ -821,7 +821,6 @@ class ShoppingCart: UIViewController, CheckoutCellDelegate,UITableViewDataSource
         UserDefaults.standard.synchronize()
         
 
-        
         //let amount_addressDict : [String: String] = ["Total_Amount": self.orderTotolLble.text!]
         
         //NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kCheckOutBtnTappedNotif), object: nil, userInfo: amount_addressDict)

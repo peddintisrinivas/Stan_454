@@ -95,9 +95,9 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         
         //NotificationCenter.default.addObserver(self, selector: #selector(HomeContainerVC.checkOutBtnTapped(_:)), name: NSNotification.Name(rawValue: Constants.kCheckOutBtnTappedNotif) , object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeContainerVC.loadSignController), name: NSNotification.Name(rawValue: Constants.kUserNotSignedIn) , object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(HomeContainerVC.loadSignController), name: NSNotification.Name(rawValue: Constants.kUserNotSignedIn) , object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeContainerVC.loadSignControllerFromItemDetailVC), name: NSNotification.Name(rawValue: Constants.kUserNotSignedInFromItemDetailVC) , object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(HomeContainerVC.loadSignControllerFromItemDetailVC), name: NSNotification.Name(rawValue: Constants.kUserNotSignedInFromItemDetailVC) , object: nil)
         
         //NotificationCenter.default.addObserver(self, selector: #selector(HomeContainerVC.presentDefaultAddressController), name: NSNotification.Name(rawValue: "ShowDefaultAddressController") , object: nil)
         
@@ -507,18 +507,18 @@ class HomeContainerVC: UIViewController, UINavigationControllerDelegate, FATutor
         self.presentSignInVC()
     }
     
-    @objc func loadSignController()
+    /*@objc func loadSignController()
     {
         //self.actionAfterLogin = ACTION_AFTER_LOGIN.wardrobe_SHOW
         self.actionAfterLogin = ACTION_AFTER_LOGIN.none
         self.presentSignInVC()
-    }
+    }*/
     
-    @objc func loadSignControllerFromItemDetailVC()
+    /*@objc func loadSignControllerFromItemDetailVC()
     {
         self.actionAfterLogin = ACTION_AFTER_LOGIN.none
         self.presentSignInVC()
-    }
+    }*/
     
     /*@objc func presentaddContainer()
      {
