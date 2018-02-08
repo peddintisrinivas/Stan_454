@@ -47,7 +47,7 @@ enum ViewMode {
 }
 
 
-class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, ClothingItemImageViewDelegate, UIScrollViewDelegate, FAZoomVCDelegate, ItemsDetailVcDelegate,ShoppingCartDelegate
+class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate, ClothingItemImageViewDelegate, UIScrollViewDelegate, FAZoomVCDelegate, ItemsDetailVcDelegate,ShoppingCartDelegate,SignInDelegate
 {
     
     // MARK: -  Category View
@@ -1209,7 +1209,46 @@ class ModelVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UIG
     
     func presentSignIn()
     {
-        NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kUserNotSignedIn), object: nil, userInfo: nil)
+        //NotificationCenter.default.post(name: Notification.Name(rawValue: Constants.kUserNotSignedIn), object: nil, userInfo: nil)
+        
+        let storyBoard = UIStoryboard(name: "SignIn", bundle:Bundle(for: Wardrober.self))
+        let siginController = storyBoard.instantiateViewController(withIdentifier: "singIn") as? SignInController
+        siginController!.delegate = self
+        
+        let signNavigationVC = UINavigationController.init(rootViewController: siginController!)
+        
+        self.present(signNavigationVC, animated: true, completion: nil)
+        
+    }
+    
+    // MARK: - SignInDelegate methods
+    
+    func signInControllerDidLogin(_ signInVC: SignInController) {
+        
+        signInVC.dismiss(animated: true) {
+            
+            let userSignedIn =   UserDefaults.standard.bool(forKey: Constants.kUserSuccessfullySignedIn)
+            
+            
+        }
+        
+    }
+    
+    func signUpControllerDidRegisterSuccessfully(_ signUpVC: SignUpController) {
+        
+        signUpVC.dismiss(animated: true) {
+            
+            let userSignedIn =   UserDefaults.standard.bool(forKey: Constants.kUserSuccessfullySignedIn)
+            
+        }
+    }
+    
+    func signInControllerDidCancelLogin(_ signInVC: SignInController) {
+        
+        
+        signInVC.dismiss(animated: true) {
+            
+        }
         
     }
     func setProgressHudHidden(_ hidden : Bool)
